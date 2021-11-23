@@ -16,7 +16,6 @@ const { API } = require('nhentai-api')
 const { liriklagu, quotemaker, randomNimek, fb, sleep, jadwalTv, ss } = require('./lib/functions')
 const { help, snk, info, donate, readme, listChannel } = require('./lib/help')
 const { stdout } = require('process')
-const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'))
 const welkom = JSON.parse(fs.readFileSync('./lib/welcome.json'))
 const { RemoveBgResult, removeBackgroundFromImageBase64, removeBackgroundFromImageFile } = require('remove.bg')
 
@@ -44,19 +43,19 @@ module.exports = msgHandler = async (client, message) => {
         }
 
         const mess = {
-            wait: '[ WAIT ] Sedang di proses⏳ silahkan tunggu sebentar',
+            wait: '[ Espere ] Em andamento⏳ por favor, aguarde um momento',
             error: {
-                St: '[❗] Kirim gambar dengan caption *!sticker* atau tag gambar yang sudah dikirim',
-                Qm: '[❗] Terjadi kesalahan, mungkin themenya tidak tersedia!',
-                Yt3: '[❗] Terjadi kesalahan, tidak dapat meng konversi ke mp3!',
-                Yt4: '[❗] Terjadi kesalahan, mungkin error di sebabkan oleh sistem.',
-                Ig: '[❗] Terjadi kesalahan, mungkin karena akunnya private',
-                Ki: '[❗] Bot tidak bisa mengeluarkan admin group!',
-                Ad: '[❗] Tidak dapat menambahkan target, mungkin karena di private',
-                Iv: '[❗] Link yang anda kirim tidak valid!'
+                St: '[❗] Envie uma imagem com a legenda *.sticker* ou marque a imagem que foi enviada',
+                Qm: '[❗] Ocorreu um erro, talvez o tema não esteja disponível!',
+                Yt3: '[❗] Ocorreu um erro, não é possível converter para mp3!',
+                Yt4: '[❗] Ocorreu um erro, talvez o erro tenha sido causado pelo sistema.',
+                Ig: '[❗] Ocorreu um erro, talvez porque a conta é privada',
+                Ki: '[❗] Os bots não podem remover administradores do grupo!',
+                Ad: '[❗] Não é possível adicionar o contato, talvez porque seja privado',
+                Iv: '[❗] O link que você enviou é inválido!'
             }
         }
-        const apiKey = 'httss://api.whatsapp.com/send/?phone=%2B5582427081&text&app_absent=0API-KEY' // apikey you can get it at https://mhankbarbar.moe
+        const apiKey = 'https://api.whatsapp.com/send/?phone=559182427081&text&app_absent=0' // apikey you can get it at https://mhankbarbar.moe
         const time = moment(t * 1000).format('DD/MM HH:mm:ss')
         const botNumber = await client.getHostNumber()
         const blockNumber = await client.getBlockedIds()
@@ -67,7 +66,6 @@ module.exports = msgHandler = async (client, message) => {
         const ownerNumber = ["559182427081@c.us","559182427081"]
         const isOwner = ownerNumber.includes(sender.id)
         const isBlocked = blockNumber.includes(sender.id)
-        const isNsfw = isGroupMsg ? nsfw_.includes(chat.id) : false
         const uaOverride = 'WhatsApp/2.2029.4 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36'
         const isUrl = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi)
         if (!isGroupMsg && command.startsWith('!')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname))
@@ -266,41 +264,21 @@ module.exports = msgHandler = async (client, message) => {
                 client.reply(from, mess.error.Ig, id)
                 }
             break
-        case '!nsfw':
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
-            if (args.length === 1) return client.reply(from, 'Pilih enable atau disable!', id)
-            if (args[1].toLowerCase() === 'enable') {
-                nsfw_.push(chat.id)
-                fs.writeFileSync('./lib/NSFW.json', JSON.stringify(nsfw_))
-                client.reply(from, 'NSWF Command berhasil di aktifkan di group ini! kirim perintah *!nsfwMenu* untuk mengetahui menu', id)
-            } else if (args[1].toLowerCase() === 'disable') {
-                nsfw_.splice(chat.id, 1)
-                fs.writeFileSync('./lib/NSFW.json', JSON.stringify(nsfw_))
-                client.reply(from, 'NSFW Command berhasil di nonaktifkan di group ini!', id)
-            } else {
-                client.reply(from, 'Pilih enable atau disable udin!', id)
-            }
-            break
         case '!welcome':
-            if (!isGroupMsg) return client.reply(from, 'Perintah ini hanya bisa di gunakan dalam group!', id)
-            if (!isGroupAdmins) return client.reply(from, 'Perintah ini hanya bisa di gunakan oleh Admin group!', id)
-            if (args.length === 1) return client.reply(from, 'Pilih enable atau disable!', id)
+            if (!isGroupMsg) return client.reply(from, 'Este comando só pode ser usado em grupos!', id)
+            if (!isGroupAdmins) return client.reply(from, 'Este comando só pode ser usado pelo administrador!', id)
+            if (args.length === 1) return client.reply(from, 'Escolha habilitar ou desabilitar!', id)
             if (args[1].toLowerCase() === 'enable') {
                 welkom.push(chat.id)
                 fs.writeFileSync('./lib/welcome.json', JSON.stringify(welkom))
-                client.reply(from, 'Fitur welcome berhasil di aktifkan di group ini!', id)
+                client.reply(from, 'O recurso de boas-vindas foi ativado com sucesso neste grupo!', id)
             } else if (args[1].toLowerCase() === 'disable') {
                 welkom.splice(chat.id, 1)
                 fs.writeFileSync('./lib/welcome.json', JSON.stringify(welkom))
-                client.reply(from, 'Fitur welcome berhasil di nonaktifkan di group ini!', id)
+                client.reply(from, 'FO recurso de boas-vindas foi desabilitado com sucesso neste grupo!', id)
             } else {
-                client.reply(from, 'Pilih enable atau disable udin!', id)
+                client.reply(from, 'Selecione habilitar ou desabilitar!', id)
             }
-            break
-        case '!nsfwmenu':
-            if (!isNsfw) return
-            client.reply(from, '1. !randomHentai\n2. !randomNsfwNeko', id)
             break
         case '!igstalk':
             if (args.length === 1)  return client.reply(from, 'Kirim perintah *!igStalk @username*\nConntoh *!igStalk @duar_amjay*', id)
@@ -663,46 +641,6 @@ module.exports = msgHandler = async (client, message) => {
             const rindKiy = ditiJsin[rindIndix]
             client.sendFileFromUrl(from, rindKiy.image, 'Husbu.jpg', rindKiy.teks, id)
             break
-        case '!randomhentai':
-            if (isGroupMsg) {
-                if (!isNsfw) return client.reply(from, 'Command/Perintah NSFW belum di aktifkan di group ini!', id)
-                const hentai = await randomNimek('hentai')
-                if (hentai.endsWith('.png')) {
-                    var ext = '.png'
-                } else {
-                    var ext = '.jpg'
-                }
-                client.sendFileFromUrl(from, hentai, `Hentai${ext}`, 'Hentai!', id)
-                break
-            } else {
-                const hentai = await randomNimek('hentai')
-                if (hentai.endsWith('.png')) {
-                    var ext = '.png'
-                } else {
-                    var ext = '.jpg'
-                }
-                client.sendFileFromUrl(from, hentai, `Hentai${ext}`, 'Hentai!', id)
-            }
-        case '!randomnsfwneko':
-            if (isGroupMsg) {
-                if (!isNsfw) return client.reply(from, 'Command/Perintah NSFW belum di aktifkan di group ini!', id)
-                const nsfwneko = await randomNimek('nsfw')
-                if (nsfwneko.endsWith('.png')) {
-                    var ext = '.png'
-                } else {
-                    var ext = '.jpg'
-                }
-                client.sendFileFromUrl(from, nsfwneko, `nsfwNeko${ext}`, 'Nsfwneko!', id)
-            } else {
-                const nsfwneko = await randomNimek('nsfw')
-                if (nsfwneko.endsWith('.png')) {
-                    var ext = '.png'
-                } else {
-                    var ext = '.jpg'
-                }
-                client.sendFileFromUrl(from, nsfwneko, `nsfwNeko${ext}`, 'Nsfwneko!', id)
-            }
-            break
         case '!randomnekonime':
             const nekonime = await get.get('https://mhankbarbars.herokuapp.com/api/nekonime').json()
             if (nekonime.result.endsWith('.png')) {
@@ -762,8 +700,8 @@ module.exports = msgHandler = async (client, message) => {
             client.reply(from, `➸ *Quotes* : ${skya_.quote}\n➸ *Character* : ${skya_.character}\n➸ *Anime* : ${skya_.anime}`, id)
             break
         case '!meme':
-            const response = await axios.get('https://meme-api.herokuapp.com/gimme/wholesomeanimemes');
-            const { postlink, title, subreddit, url, nsfw, spoiler } = response.data
+            const response = await axios.get('https://api.imgflip.com/get_memes');
+            const { postlink, title, subreddit, url, spoiler } = response.data
             client.sendFileFromUrl(from, `${url}`, 'meme.jpg', `${title}`)
             break
         case '!help':

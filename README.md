@@ -2,7 +2,7 @@
 <img src="https://scontent.fbel10-1.fna.fbcdn.net/v/t39.30808-6/241826745_542040287084024_3906587146433721054_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=8631f5&_nc_ohc=8VdSZFdNtsIAX_a7vbH&_nc_ht=scontent.fbel10-1.fna&oh=1e6d351eabb85aae3607ec2a5423c317&oe=619EF916" width="512" height="256"/>
 </p>
 <p align="center">
-<a href="#"><img title="Butterfly_V3" src="https://img.shields.io/badge/Brazilian Church Bot-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge"></a>
+<a href="#"><img title="Butterfly_V4" src="https://img.shields.io/badge/Brazilian Church Bot-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge"></a>
 </p>
 <p align="center">
 <a href="https://github.com/therjyer"><img title="Autor" src="https://img.shields.io/badge/Author-Therjyer-black.svg?style=for-the-badge&logo=github"></a>
@@ -33,7 +33,7 @@
 ## Clone esse projeto
 
 ```bash
-> git clone https://github.com/therjyer/butterfly_v3.git
+> git clone https://github.com/therjyer/butterfly_v4.git
 ```
 
 ## Instale as dependências:
@@ -41,7 +41,7 @@ Ah! Antes de usar o código mais abaixo, lembre-se de estar dentro
 da pasta da butterfly!
 
 ```bash
-> cd butterfly_v3
+> cd butterfly_v4
 > bash install.sh
 ```
 
@@ -65,7 +65,7 @@ da pasta da butterfly!
 ## Clone esse projeto
 
 ```bash
-> git clone https://github.com/therjyer/butterfly_v3.git
+> git clone https://github.com/therjyer/butterfly_v4.git
 ```
 
 ## Instale as dependências:
@@ -73,7 +73,7 @@ Ah! Antes de usar o código mais abaixo, lembre-se de estar dentro
 da pasta da butterfly!
 
 ```bash
-> cd butterfly_v3
+> cd butterfly_v4
 > sudo bash install.sh
 ```
 

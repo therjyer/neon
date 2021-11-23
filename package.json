@@ -1,5 +1,5 @@
 {
-  "name": "butterfly_v3",
+  "name": "butterfly_v4",
   "version": "0.0.2",
   "description": "No comment",
   "main": "index.js",
@@ -38,10 +38,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/therjyer/butterfly_v3.git"
+    "url": "git+https://github.com/therjyer/butterfly_v4.git"
   },
   "bugs": {
-    "url": "https://github.com/therjyer/butterfly_v3/issues"
+    "url": "https://github.com/therjyer/butterfly_v4/issues"
   },
-  "homepage": "https://github.com/therjyer/butterfly_v3#readme"
+  "homepage": "https://github.com/therjyer/butterfly_v4#readme"
 }
