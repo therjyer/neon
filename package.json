@@ -1,0 +1,47 @@
+{
+  "name": "butterfly_v3",
+  "version": "0.0.2",
+  "description": "No comment",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "butterfly",
+    "v3",
+    "whatsapp",
+    "bot"
+  ],
+  "author": "Therjyer",
+  "license": "ISC",
+  "dependencies": {
+    "@adiwajshing/baileys": "^3.5.3",
+    "async": "^3.2.2",
+    "axios": "^0.24.0",
+    "cfonts": "^2.10.0",
+    "escape-string-regexp": "^5.0.0",
+    "fake-useragent": "^1.0.1",
+    "file-type": "^16.5.3",
+    "fluent-ffmpeg": "^2.1.2",
+    "moment-timezone": "^0.5.34",
+    "multistream": "^4.1.0",
+    "node-fetch": "^2.6.1",
+    "remove.bg": "^1.3.0",
+    "request": "^2.88.2",
+    "spinnies": "^0.5.1",
+    "tiktok-scraper": "^1.4.36"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therjyer/butterfly_v3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/therjyer/butterfly_v3/issues"
+  },
+  "homepage": "https://github.com/therjyer/butterfly_v3#readme"
+}
