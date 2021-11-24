@@ -743,7 +743,7 @@ async function starts() {
 					}
 					break
 				case 'bemvindo':
-				case 'boasvindas'
+				case 'boasvindas':
 				case 'welcome':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
