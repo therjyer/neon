@@ -541,6 +541,7 @@ async function starts() {
 							client.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
 							fs.unlinkSync(rano)
 						})
+					})
 					break
 				case 'tagall':
 					if (!isGroup) return reply(mess.only.group)
