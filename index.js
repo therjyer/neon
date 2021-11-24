@@ -7,8 +7,9 @@ const {
 } = require('@adiwajshing/baileys')
 const { color, bgcolor } = require('./lib/color')
 const { help } = require('./src/help')
-const { botmsg } = require('./src/botmsg')
+const { menuadmin } = require('./src/menuadmin')
 const { shalom } = require('./src/shalom')
+const { mensagem } = require('./src/mensagem')
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
 const { fetchJson, fetchText } = require('./lib/fetcher')
 const { recognize } = require('./lib/ocr')
@@ -216,6 +217,12 @@ async function starts() {
 				case 'menu':
 					client.sendMessage(from, help(prefix), text)
 					break
+				case 'menuadm':
+				case 'admmenu':
+				case 'admhelp':
+				case 'helpadm':
+					client.sendMessage(from, menuadmin(prefix), text)
+					break
 				case 'info':
 					me = client.user
 					uptime = process.uptime()
@@ -224,7 +231,7 @@ async function starts() {
 					client.sendMessage(from, buffer, image, {caption: teks, contextInfo:{mentionedJid: [me.jid]}})
 					break
 				case 'bot':
-					client.sendMessage(from, botmsg(prefix), text)
+					client.sendMessage(from, mensagem(prefix, sender), text, {quoted: mek})
 					break
 				case 'shalom':
 				case 'shalon':

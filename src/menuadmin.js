@@ -25,7 +25,6 @@ const menuadmin = (prefix, pushname) => {
  ├─ ❏ ${prefix}simih
  └─ ❏ ${prefix}ownergroup
  `
-
 }
 
 exports.menuadmin = menuadmin
