@@ -4,26 +4,28 @@ const menuadmin = (prefix, pushname) => {
  
  ◪ *COMANDOS ADMINISTRATIVOS*
  │
- ├─ ❏ ${prefix}opengc
- ├─ ❏ ${prefix}closegc
- ├─ ❏ ${prefix}promote
- ├─ ❏ ${prefix}demote
- ├─ ❏ ${prefix}tagall
- ├─ ❏ ${prefix}tagall2
- ├─ ❏ ${prefix}tagall3
- ├─ ❏ ${prefix}tagall4
- ├─ ❏ ${prefix}tagall5
- ├─ ❏ ${prefix}add
- ├─ ❏ ${prefix}kick
- ├─ ❏ ${prefix}listadmins
- ├─ ❏ ${prefix}linkgroup
- ├─ ❏ ${prefix}leave
- ├─ ❏ ${prefix}welcome
- ├─ ❏ ${prefix}leveling
- ├─ ❏ ${prefix}level
- ├─ ❏ ${prefix}delete
- ├─ ❏ ${prefix}simih
- └─ ❏ ${prefix}ownergroup
+ ├─ ❏ *${prefix}add*
+ ├─ ❏ *${prefix}adicionar*
+ ├─ ❏ *${prefix}kick*
+ ├─ ❏ *${prefix}ban*
+ ├─ ❏ *${prefix}banir*
+ ├─ ❏ *${prefix}promote*
+ ├─ ❏ *${prefix}promover*
+ ├─ ❏ *${prefix}upar*
+ ├─ ❏ *${prefix}demote*
+ ├─ ❏ *${prefix}rebaixar*
+ ├─ ❏ *${prefix}linkgroup*
+ ├─ ❏ *${prefix}linkdogrupo*
+ ├─ ❏ *${prefix}leave*
+ ├─ ❏ *${prefix}sair*
+ ├─ ❏ *${prefix}listadmins*
+ ├─ ❏ *${prefix}adms*
+ ├─ ❏ *${prefix}administradores*
+ ├─ ❏ *${prefix}listaradms*
+ ├─ ❏ *${prefix}tagall*
+ ├─ ❏ *${prefix}tagall2*
+ ├─ ❏ *${prefix}tagall3*
+ └─ ❏ *${prefix}simih*
  `
 }
 
