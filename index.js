@@ -23,8 +23,78 @@ const { removeBackgroundFromImageFile } = require('remove.bg')
 const welkom = JSON.parse(fs.readFileSync('./src/welkom.json'))
 const samih = JSON.parse(fs.readFileSync('./src/simi.json'))
 const setting = JSON.parse(fs.readFileSync('./src/settings.json'))
+const _leveling = JSON.parse(fs.readFileSync('./database/json/leveling.json'))
+const _level = JSON.parse(fs.readFileSync('./database/json/level.json'))
 prefix = setting.prefix
 blocked = []
+
+const getLevelingXp = (userId) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		return _level[position].xp
+	}
+}
+
+const getLevelingLevel = (userId) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		return _level[position].level
+	}
+}
+
+const getLevelingId = (userId) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		return _level[position].jid
+	}
+}
+
+const addLevelingXp = (userId, amount) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		_level[position].xp += amount
+		fs.writeFileSync('./database/json/level.json', JSON.stringify(_level))
+	}
+}
+
+const addLevelingLevel = (userId, amount) => {
+	let position = false
+	Object.keys(_level).forEach((i) => {
+		if (_level[i].jid === userId) {
+			position = i
+		}
+	})
+	if (position !== false) {
+		_level[position].level += amount
+		fs.writeFileSync('./database/json/level.json', JSON.stringify(_level))
+	}
+}
+
+const addLevelingId = (userId) => {
+	const obj = {jid: userId, xp: 1, level: 1}
+	_level.push(obj)
+	fs.writeFileSync('./database/json/level.json', JSON.stringify(_level))
+}
 
 function kyun(seconds){
   function pad(s){
@@ -118,6 +188,10 @@ async function starts() {
 			mess = {
 				wait: 'Carregando o Mixxtério ⌛',
 				success: 'Sucesso ✔️',
+				levelon: '*Habilitar Level* ✔️',
+				leveloff: '*Desabilitar Level* ❌',
+				levelnoton: '*Level não ativo* ❌',
+				levelnol: '*Mas bem kkkkk level* 0 ',
 				error: {
 					stick: 'Ih, consegui fazer essa não. ❌\nMas tente de novo 😅',
 					Iv: ' O link que você me forneceu é inválido, vaso ❌'
@@ -140,6 +214,7 @@ async function starts() {
 			const groupId = isGroup ? groupMetadata.jid : ''
 			const groupMembers = isGroup ? groupMetadata.participants : ''
 			const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
+			const isLevelingOn = isGroup ? _leveling.includes(groupId) : false
 			const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 			const isGroupAdmins = groupAdmins.includes(sender) || false
 			const isWelkom = isGroup ? welkom.includes(from) : false
@@ -157,7 +232,23 @@ async function starts() {
 			const mentions = (teks, memberr, id) => {
 				(id == null || id == undefined || id == false) ? client.sendMessage(from, teks.trim(), extendedText, {contextInfo: {"mentionedJid": memberr}}) : client.sendMessage(from, teks.trim(), extendedText, {quoted: mek, contextInfo: {"mentionedJid": memberr}})
 			}
-
+			if (isGroup && isLevelingOn) {
+				const currentLevel = getLevelingLevel(sender)
+				const checkId = getLevelingId(sender)
+				try {
+					if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
+					const amountXp = Math.floor(Math.random() * 10) + 500
+					const requiredXp = 5000 * (Math.pow(2, currentLevel) - 1)
+					const getLevel = getLevelingLevel(sender)
+					addLevelingXp(sender, amountXp)
+					if (requiredXp <= getLevelingXp(sender)) {
+						addLevelingLevel(sender, 1)
+						await reply(`*「 LEVEL UP 」*\n\n➸ *Nome*: ${sender}\n➸ *XP*: ${getLevelingXp(sender)}\n➸ *Level*: ${getLevel} -> ${getLevelingLevel(sender)}\n\nParabéns!! 🎉🎉`)
+					}
+				} catch (err) {
+					console.error(err)
+				}
+			}
 			colors = ['red','white','black','blue','yellow','green']
 			const isMedia = (type === 'imageMessage' || type === 'videoMessage')
 			const isQuotedImage = type === 'extendedTextMessage' && content.includes('imageMessage')
@@ -785,6 +876,37 @@ async function starts() {
 					} catch (e) {
 						reply('Não foi possível clonar essa foto de perfil 😪\nMas tente de novo 😏')
 					}
+					break
+				case 'level':
+					if (!isLevelingOn) return reply(mess.levelnoton)
+					if (!isGroup) return reply(mess.only.group)
+					const userLevel = getLevelingLevel(sender)
+					const userXp = getLevelingXp(sender)
+					if (userLevel === undefined && userXp === undefined) return reply(mess.levelnol)
+					sem = sender.replace('@s.whatsapp.net','')
+					resul = `◪ *LEVEL*\n  ├─ ❏ *Nome* : ${sem}\n  ├─ ❏ *User XP* : ${userXp}\n  └─ ❏ *User Level* : ${userLevel}`
+					client.sendMessage(from, resul, text, { quoted: mek})
+					.catch(async (err) => {
+							console.error(err)
+							await reply(`Error!\n${err}`)
+						})
+					break
+					case 'leveling':
+						if (!isGroup) return reply(mess.only.group)
+						if (!isGroupAdmins) return reply(mess.only.admin)
+						if (args.length < 1) return reply('Digite 1 para ativar o recurso')
+						if (args[0] === '1') {
+							if (isLevelingOn) return reply('*o recurso de nível já estava ativo antes*')
+							_leveling.push(groupId)
+							fs.writeFileSync('./database/json/leveling.json', JSON.stringify(_leveling))
+							 reply(mess.levelon)
+						} else if (args[0] === '0') {
+							_leveling.splice(groupId, 1)
+							fs.writeFileSync('./database/json/leveling.json', JSON.stringify(_leveling))
+							 reply(mess.leveloff)
+						} else {
+							reply(` *Digite o comando 1 para ativar, 0 para desativar *\n * Exemplo: ${prefix}leveling 1*`)
+						}
 					break
 				case 'wait':
 					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
