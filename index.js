@@ -44,7 +44,7 @@ async function starts() {
 	})
 
 	fs.existsSync('./BarBar.json') && client.loadAuthInfo('./BarBar.json')
-	client.on('Conectando', () => {
+	client.on('connecting', () => {
 		start('2', 'Conectando...')
 	})
 	client.on('open', () => {
