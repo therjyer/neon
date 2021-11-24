@@ -7,6 +7,8 @@ const {
 } = require('@adiwajshing/baileys')
 const { color, bgcolor } = require('./lib/color')
 const { help } = require('./src/help')
+const { botmsg } = require('./src/botmsg')
+const { shalom } = require('./src/shalom')
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
 const { fetchJson, fetchText } = require('./lib/fetcher')
 const { recognize } = require('./lib/ocr')
@@ -222,11 +224,11 @@ async function starts() {
 					client.sendMessage(from, buffer, image, {caption: teks, contextInfo:{mentionedJid: [me.jid]}})
 					break
 				case 'bot':
-					teks = 'Que a paz do Senhor esteja convosco 🙆‍♀️'
+					client.sendMessage(from, botmsg(prefix), text)
 					break
 				case 'shalom':
 				case 'shalon':
-					teks = 'Isso ainda está sendo construído, calma vaso 🙆‍♀️'
+					client.sendMessage(from, shalom(prefix, sender), text, {quoted: mek})
 					break
 				case 'blocklist':
 					teks = 'Essa é a lista de números bloqueados:\n'
