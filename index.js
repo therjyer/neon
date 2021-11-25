@@ -262,7 +262,7 @@ async function starts() {
 			if (authorname != undefined) { } else { authorname = groupName }	
 			
 			function addMetadata(packname, author) {	
-				if (!packname) packname = 'Aquelas figurinhas duvidosas'; if (!author) author = 'Butterfly_v4';
+				if (!packname) packname = 'Aquelas figurinhas duvidosas'; if (!author) author = 'bcm_v4';
 				author = author.replace(/[^a-zA-Z0-9]/g, '');
 				let name = `${author}_${packname}`
 				if (fs.existsSync(`./src/stickers/${name}.exif`)) return `./src/stickers/${name}.exif`
@@ -636,7 +636,7 @@ async function starts() {
 					exec(`wget ${anu.result} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
 						fs.unlinkSync(ranp)
 						if (err) return reply(mess.error.stick)
-						exec(`webpmux -set exif ${addMetadata('Butterfly_v4', authorname)} ${rano} -o ${rano}`, async (error) => {
+						exec(`webpmux -set exif ${addMetadata('bcm_v4', authorname)} ${rano} -o ${rano}`, async (error) => {
 							if (error) return reply(mess.error.stick)
 							client.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
 							fs.unlinkSync(rano)
@@ -676,7 +676,9 @@ async function starts() {
 					client.sendMessage(from, teks, text, {detectLinks: false, quoted: mek})
 					break
 				case 'clearall':
-					if (!isOwner) return reply('Quem é Você? 🧐')
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					anu = await client.chats.all()
 					client.setMaxListeners(25)
 					for (let _ of anu) {

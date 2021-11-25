@@ -1,6 +1,6 @@
 const help = (prefix) => {
 	return `
-┏ ❣ *Comandos da Butterfly* ❣
+┏ ❣ *Comandos da BCM* ❣
 ╿
 ┷┯ ☾ Comandos de Sticker ☽
  ╽
