@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://scontent.fbel10-1.fna.fbcdn.net/v/t39.30808-6/241826745_542040287084024_3906587146433721054_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=8631f5&_nc_ohc=8VdSZFdNtsIAX_a7vbH&_nc_ht=scontent.fbel10-1.fna&oh=1e6d351eabb85aae3607ec2a5423c317&oe=619EF916" width="512" height="256"/>
+<img src="https://scontent.fbel10-1.fna.fbcdn.net/v/t39.30808-6/241826745_542040287084024_3906587146433721054_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=8631f5&_nc_ohc=iAEu5nF221cAX_k7hjo&_nc_ht=scontent.fbel10-1.fna&oh=75878cca30d5f6f4031daf3bc52b7ec2&oe=61A4E7D6" width="512" height="256"/>
 </p>
 <p align="center">
 <a href="#"><img title="bcm_V4" src="https://img.shields.io/badge/Brazilian Church Bot-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge"></a>
