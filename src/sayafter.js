@@ -1,5 +1,5 @@
-const mensagem = (prefix, pushname) => {
+const sayafter = (prefix, pushname) => {
 	return `**Boa tarde meu querido, tudo bom?**`
 }
 
-exports.mensagem = mensagem
+exports.sayafter = sayafter
