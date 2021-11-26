@@ -10,6 +10,9 @@ const { help } = require('./src/help')
 const { menuadmin } = require('./src/menuadmin')
 const { shalom } = require('./src/shalom')
 const { mensagem } = require('./src/mensagem')
+const { sayday } = require('./src/sayday')
+const { sayafter } = require('./src/sayafter')
+const { saynight } = require('./src/saynight')
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
 const { fetchJson, fetchText } = require('./lib/fetcher')
 const { recognize } = require('./lib/ocr')
@@ -328,6 +331,15 @@ async function starts() {
 				case 'shalon':
 					client.sendMessage(from, shalom(prefix, sender), text, {quoted: mek})
 					break
+				case 'timesetday':
+					client.sendMessage(from, sayday(prefix, sender), text, {quoted: mek})
+				break
+				case 'timesetafter':
+					client.sendMessage(from, sayafter(prefix, sender), text, {quoted: mek})
+				break
+				case 'timesetnight':
+					client.sendMessage(from, saynight(prefix, sender), text, {quoted: mek})
+				break
 				case 'blocklist':
 					teks = 'Essa é a lista de números bloqueados:\n'
 					for (let block of blocked) {
@@ -699,6 +711,7 @@ async function starts() {
 						reply('Sucesso na transmissão')
 					}
 					break
+					case 'gamemode1':
 					case 'promover':
 					case 'upar':
                     case 'promote':
@@ -719,6 +732,7 @@ async function starts() {
 						client.groupMakeAdmin(from, mentioned)
 					}
 					break
+				case 'gamemode0':
 				case 'rebaixar':
 				case 'demote':
 					if (!isGroup) return reply(mess.only.group)
