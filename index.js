@@ -253,6 +253,7 @@ async function starts() {
 					}
 				} catch (err) {
 					console.error(err)
+					}
 				}
 			}
 			colors = ['red','white','black','blue','yellow','green']
