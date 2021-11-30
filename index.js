@@ -239,21 +239,17 @@ async function starts() {
 				const currentLevel = getLevelingLevel(sender)
 				const checkId = getLevelingId(sender)
 				try {
-					const mdata = await client.groupMetadata(anu.jid)
-					console.log(anu)
-					if (currentLevel === undefined && checkId === undefined) addLevelingId(sender) {
-						num = anu.participants[0]
+					if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
 					const amountXp = Math.floor(Math.random() * 10) + 500
 					const requiredXp = 5000 * (Math.pow(2, currentLevel) - 1)
 					const getLevel = getLevelingLevel(sender)
 					addLevelingXp(sender, amountXp)
 					if (requiredXp <= getLevelingXp(sender)) {
 						addLevelingLevel(sender, 1)
-						await reply(`*「 Você passou de Level! 」*\n\n➸ *Nome:* @${num.split('@')[0]}\n➸ *Experiência:* ${getLevelingXp(sender)}\n➸ *Level:* ${getLevel} -> ${getLevelingLevel(sender)}\n\nContinue conversando para continuar subindo! 😁😁`)
+						await reply(`*「 Você passou de Level! 」*\n\n➸ *Nome:* @${sender}\n➸ *Experiência*: ${getLevelingXp(sender)}\n➸ *Level*: ${getLevel} -> ${getLevelingLevel(sender)}\n\nContinue conversando para continuar subindo! 😁😁`)
 					}
 				} catch (err) {
 					console.error(err)
-					}
 				}
 			}
 			colors = ['red','white','black','blue','yellow','green']
@@ -906,8 +902,8 @@ async function starts() {
 					const userLevel = getLevelingLevel(sender)
 					const userXp = getLevelingXp(sender)
 					if (userLevel === undefined && userXp === undefined) return reply(mess.levelnol)
-					sem = sender
-					resul = `◪ *LEVEL*\n  ├─ ❏ *Nome:* @${sem}\n  ├─ ❏ *Quantidade de Experiência:* ${userXp}\n  └─ ❏ *Seu level:* ${userLevel}`
+					sem = sender.replace('@s.whatsapp.net','')
+					resul = `◪ *LEVEL*\n  ├─ ❏ *Nome:* @${sender}\n  ├─ ❏ *Quantidade de Experiência:* ${userXp}\n  └─ ❏ *Seu level:* ${userLevel}`
 					client.sendMessage(from, resul, text, { quoted: mek})
 					.catch(async (err) => {
 							console.error(err)
