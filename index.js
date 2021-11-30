@@ -532,7 +532,7 @@ async function starts() {
 							.toFormat('webp')
 							.save(ran)*/
 					} else {
-						reply(`Envie ou mencione uma foto com a legenda ${prefix}sticker nobg para fazer a figurinha 🤗`)
+						reply(`Envie ou mencione uma foto com a legenda ${prefix}sticker para fazer a figurinha 🤗\nPorém caso seja um vídeo, o tempo máximo suportado é de 10 segundos 😅`)
 					}
 					break
 				case 'gtts':
