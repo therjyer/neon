@@ -239,14 +239,17 @@ async function starts() {
 				const currentLevel = getLevelingLevel(sender)
 				const checkId = getLevelingId(sender)
 				try {
-					if (currentLevel === undefined && checkId === undefined) addLevelingId(sender)
+					const mdata = await client.groupMetadata(anu.jid)
+					console.log(anu)
+					if (currentLevel === undefined && checkId === undefined) addLevelingId(sender) {
+						num = anu.participants[0]
 					const amountXp = Math.floor(Math.random() * 10) + 500
 					const requiredXp = 5000 * (Math.pow(2, currentLevel) - 1)
 					const getLevel = getLevelingLevel(sender)
 					addLevelingXp(sender, amountXp)
 					if (requiredXp <= getLevelingXp(sender)) {
 						addLevelingLevel(sender, 1)
-						await reply(`*「 Você passou de Level! 」*\n\n➸ *Nome:* @${sem}\n➸ *Experiência:* ${getLevelingXp(sender)}\n➸ *Level:* ${getLevel} -> ${getLevelingLevel(sender)}\n\nContinue conversando para continuar subindo! 😁😁`)
+						await reply(`*「 Você passou de Level! 」*\n\n➸ *Nome:* @${num.split('@')[0]}\n➸ *Experiência:* ${getLevelingXp(sender)}\n➸ *Level:* ${getLevel} -> ${getLevelingLevel(sender)}\n\nContinue conversando para continuar subindo! 😁😁`)
 					}
 				} catch (err) {
 					console.error(err)
