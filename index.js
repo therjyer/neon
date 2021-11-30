@@ -246,7 +246,7 @@ async function starts() {
 					addLevelingXp(sender, amountXp)
 					if (requiredXp <= getLevelingXp(sender)) {
 						addLevelingLevel(sender, 1)
-						await reply(`*「 LEVEL UP 」*\n\n➸ *Nome*: ${sender}\n➸ *XP*: ${getLevelingXp(sender)}\n➸ *Level*: ${getLevel} -> ${getLevelingLevel(sender)}\n\nParabéns!! 🎉🎉`)
+						await reply(`*「 Você passou de Level! 」*\n\n➸ *Nome:* @${num.split('@')[0]}\n➸ *Experiência:* ${getLevelingXp(sender)}\n➸ *Level:* ${getLevel} -> ${getLevelingLevel(sender)}\n\nContinue conversando para continuar subindo! 😁😁`)
 					}
 				} catch (err) {
 					console.error(err)
@@ -548,18 +548,21 @@ async function starts() {
 						fs.unlinkSync(ranm)
 					})
 					break
-				case 'meme':
+				/*case 'meme':
 					meme = await fetchJson('https://api.imgflip.com/get_memes', { method: 'get' })
 					buffer = await getBuffer(`https://imgur.com/gallery/${meme.hash}.jpg`)
 					client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Tenho nada a ver com isso 😳😳 kkkkk'})
 					break
-				/*case 'memeindo':
+				case 'memeindo':
 					memein = await kagApi.memeindo()
 					buffer = await getBuffer(`https://imgur.com/${memein.hash}.jpg`)
 					client.sendMessage(from, buffer, image, {quoted: mek, caption: '.......'})
 					break*/
 				case 'setprefix':
 					if (args.length < 1) return
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (!isOwner) return reply(mess.only.ownerB)
 					prefix = args[0]
 					setting.prefix = prefix
@@ -900,7 +903,7 @@ async function starts() {
 					const userXp = getLevelingXp(sender)
 					if (userLevel === undefined && userXp === undefined) return reply(mess.levelnol)
 					sem = sender.replace('@s.whatsapp.net','')
-					resul = `◪ *LEVEL*\n  ├─ ❏ *Nome* : ${sem}\n  ├─ ❏ *User XP* : ${userXp}\n  └─ ❏ *User Level* : ${userLevel}`
+					resul = `◪ *LEVEL*\n  ├─ ❏ *Nome:* @${num.split('@')[0]}\n  ├─ ❏ *Quantidade de Experiência:* ${userXp}\n  └─ ❏ *Seu level:* ${userLevel}`
 					client.sendMessage(from, resul, text, { quoted: mek})
 					.catch(async (err) => {
 							console.error(err)
