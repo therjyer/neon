@@ -12,9 +12,9 @@ const {
 
 // Requerimentos dos JSON
 
-const welkom = JSON.parse(fs.readFileSync('./database/menu/welkom.json'))
-const samih = JSON.parse(fs.readFileSync('./database/menu/simi.json'))
-const setting = JSON.parse(fs.readFileSync('./database/menu/settings.json'))
+const welkom = JSON.parse(fs.readFileSync('./database/json/welkom.json'))
+const samih = JSON.parse(fs.readFileSync('./database/json/simi.json'))
+const setting = JSON.parse(fs.readFileSync('./database/json/settings.json'))
 const _leveling = JSON.parse(fs.readFileSync('./database/json/leveling.json'))
 const _level = JSON.parse(fs.readFileSync('./database/json/level.json'))
 
