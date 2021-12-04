@@ -1,21 +1,21 @@
-const help = (prefix) => {
+const vhelp = (prefix) => {
 	return `
-┏ ❣ *Comandos da BCM* ❣
+┏ 🌌 *Comandos do Neon* 🌌
 ╿
 ┷┯ ☾ Comandos de Sticker ☽
  ╽
  ┠❥ *${prefix}sticker*
  ┠❥ *${prefix}fig*
  ┠❥ *${prefix}figurinha*
- ┠❥ *${prefix}fiorotto*
  ┠❥ *${prefix}stiker*
  ┠❥ *${prefix}toimg*
  ┠❥ *${prefix}paraimg*
  ┠❥ *${prefix}primg*		
  ╿
-┯┷ ☾ Comandos Exclusivos do Bot ☽
+┯┷ ☾ Outros Comandos ☽
 ╽
  ┠❥ *${prefix}help*
+ ┠❥ *${prefix}vhelp*
  ┠❥ *${prefix}ajuda*
  ┠❥ *${prefix}comandos*
  ┠❥ *${prefix}menu*
@@ -24,4 +24,4 @@ const help = (prefix) => {
  ╰╼❥ *${prefix}shalon*`
 }
 
-exports.help = help
+exports.vhelp = vhelp

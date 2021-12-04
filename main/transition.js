@@ -11,8 +11,6 @@ const get = require('got')
 const fetch = require('node-fetch')
 const color = require('./lib/color')
 const { spawn, exec } = require('child_process')
-const nhentai = require('nhentai-js')
-const { API } = require('nhentai-api')
 const { liriklagu, quotemaker, randomNimek, fb, sleep, jadwalTv, ss } = require('./lib/functions')
 const { help, snk, info, donate, readme, listChannel } = require('./lib/help')
 const { stdout } = require('process')
@@ -55,7 +53,7 @@ module.exports = msgHandler = async (client, message) => {
                 Iv: '[❗] O link que você enviou é inválido!'
             }
         }
-        const apiKey = 'https://api.whatsapp.com/send/?phone=559182427081&text&app_absent=0' // apikey you can get it at https://mhankbarbar.moe
+        const apiKey = 'https://api.whatsapp.com/send/?phone=559182427081&text&app_absent=0'
         const time = moment(t * 1000).format('DD/MM HH:mm:ss')
         const botNumber = await client.getHostNumber()
         const blockNumber = await client.getBlockedIds()
@@ -132,10 +130,6 @@ module.exports = msgHandler = async (client, message) => {
                 }
             }
             break
-        case '!donasi':
-        case '!donate':
-            client.sendLinkWithAutoPreview(from, 'https://saweria.co/donate/mhankbarbar', donate)
-            break
         case '!tts':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *!tts [id, en, jp, ar] [teks]*, contoh *!tts id halo semua*')
             const ttsId = require('node-gtts')('id')
@@ -165,17 +159,6 @@ module.exports = msgHandler = async (client, message) => {
             } else {
                 client.reply(from, 'Masukkan data bahasa : [id] untuk indonesia, [en] untuk inggris, [jp] untuk jepang, dan [ar] untuk arab', id)
             }
-            break
-        case '!nulis':
-            if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
-            const nulis = encodeURIComponent(body.slice(7))
-            client.reply(from, mess.wait, id)
-            let urlnulis = `https://mhankbarbar.moe/api/nulis?font=1&buku=1&text=${nulis}&apiKey=${apiKey}`
-            await fetch(urlnulis, {method: "GET"})
-            .then(res => res.json())
-            .then(async (json) => {
-                await client.sendFileFromUrl(from, json.result, 'Nulis.jpg', 'Nih anjim', id)
-            }).catch(e => client.reply(from, "Error: "+ e));
             break
         case '!ytmp3':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *!ytmp3 [linkYt]*, untuk contoh silahkan kirim perintah *!readme*')
@@ -246,7 +229,7 @@ module.exports = msgHandler = async (client, message) => {
             client.sendFileFromUrl(from, epbe.result, 'epbe.mp4', epbe.title, id)
             break
         case '!creator':
-            client.sendContact(from, '6285892766102@c.us')
+            client.sendContact(from, '91982427081@c.us')
             break
         case '!ig':
             if (args.length === 1) return client.reply(from, 'Kirim perintah *!ig [linkIg]* untuk contoh silahkan kirim perintah *!readme*')
@@ -301,46 +284,6 @@ module.exports = msgHandler = async (client, message) => {
             const res_animek = `Title: *${animek.title}*\n\n${animek.info}\n\nSinopsis: ${animek.sinopsis}\n\nLink Download:\n${animek.link_dl}`
             client.sendFileFromUrl(from, animek.thumb, 'kusonime.jpg', res_animek, id)
             break
-        case '!nh':
-            //if (isGroupMsg) return client.reply(from, 'Sorry this command for private chat only!', id)
-            if (args.length === 2) {
-                const nuklir = body.split(' ')[1]
-                client.reply(from, mess.wait, id)
-                const cek = await nhentai.exists(nuklir)
-                if (cek === true)  {
-                    try {
-                        const api = new API()
-                        const pic = await api.getBook(nuklir).then(book => {
-                            return api.getImageURL(book.cover)
-                        })
-                        const dojin = await nhentai.getDoujin(nuklir)
-                        const { title, details, link } = dojin
-                        const { parodies, tags, artists, groups, languages, categories } = await details
-                        var teks = `*Title* : ${title}\n\n*Parodies* : ${parodies}\n\n*Tags* : ${tags.join(', ')}\n\n*Artists* : ${artists.join(', ')}\n\n*Groups* : ${groups.join(', ')}\n\n*Languages* : ${languages.join(', ')}\n\n*Categories* : ${categories}\n\n*Link* : ${link}`
-                        //exec('nhentai --id=' + nuklir + ` -P mantap.pdf -o ./hentong/${nuklir}.pdf --format `+ `${nuklir}.pdf`, (error, stdout, stderr) => {
-                        client.sendFileFromUrl(from, pic, 'hentod.jpg', teks, id)
-                            //client.sendFile(from, `./hentong/${nuklir}.pdf/${nuklir}.pdf.pdf`, then(() => `${title}.pdf`, '', id)).catch(() => 
-                            //client.sendFile(from, `./hentong/${nuklir}.pdf/${nuklir}.pdf.pdf`, `${title}.pdf`, '', id))
-                            /*if (error) {
-                                console.log('error : '+ error.message)
-                                return
-                            }
-                            if (stderr) {
-                                console.log('stderr : '+ stderr)
-                                return
-                            }
-                            console.log('stdout : '+ stdout)*/
-                            //})
-                    } catch (err) {
-                        client.reply(from, '[❗] Terjadi kesalahan, mungkin kode nuklir salah', id)
-                    }
-                } else {
-                    client.reply(from, '[❗] Kode nuClear Salah!')
-                }
-            } else {
-                client.reply(from, '[ WRONG ] Kirim perintah *!nh [nuClear]* untuk contoh kirim perintah *!readme*')
-            }
-        	break
         case '!brainly':
             if (args.length >= 2){
                 const BrainlySearch = require('./lib/brainly')
@@ -626,38 +569,12 @@ module.exports = msgHandler = async (client, message) => {
             const jadwalNow = await get.get('https://api.haipbis.xyz/jadwaltvnow').json()
             client.reply(from, `Jam : ${jadwalNow.jam}\n\nJadwalTV : ${jadwalNow.jadwalTV}`, id)
             break
-        case '!loli':
-            const loli = await get.get(`https://mhankbarbar.tech/api/randomloli?apiKey=${apiKey}`).json()
-            client.sendFileFromUrl(from, loli.result, 'loli.jpeg', 'Lolinya om', id)
-            break
-        case '!waifu':
-            const waifu = await get.get(`https://mhankbarbar.tech/api/waifu?apiKey=${apiKey}`).json()
-            client.sendFileFromUrl(from, waifu.image, 'Waifu.jpg', `➸ Name : ${waifu.name}\n➸ Description : ${waifu.desc}\n\n➸ Source : ${waifu.source}`, id)
-            break
         case '!husbu':
             const diti = fs.readFileSync('./lib/husbu.json')
             const ditiJsin = JSON.parse(diti)
             const rindIndix = Math.floor(Math.random() * ditiJsin.length)
             const rindKiy = ditiJsin[rindIndix]
             client.sendFileFromUrl(from, rindKiy.image, 'Husbu.jpg', rindKiy.teks, id)
-            break
-        case '!randomnekonime':
-            const nekonime = await get.get('https://mhankbarbars.herokuapp.com/api/nekonime').json()
-            if (nekonime.result.endsWith('.png')) {
-                var ext = '.png'
-            } else {
-                var ext = '.jpg'
-            }
-            client.sendFileFromUrl(from, nekonime.result, `Nekonime${ext}`, 'Nekonime!', id)
-            break
-        case '!randomtrapnime':
-            const trap = await randomNimek('trap')
-            if (trap.endsWith('.png')) {
-                var ext = '.png'
-            } else {
-                var ext = '.jpg'
-            }
-            client.sendFileFromUrl(from, trap, `trapnime${ext}`, 'Trapnime!', id)
             break
         case '!randomanime':
             const nime = await randomNimek('anime')
@@ -678,9 +595,9 @@ module.exports = msgHandler = async (client, message) => {
             q3 = Math.floor(Math.random() * 900) + 300;
             client.sendFileFromUrl(from, 'http://placekitten.com/'+q3+'/'+q2, 'neko.png','Neko ')
             break
-        /*case '!sendto':
+        case '!sendto':
             client.sendFile(from, './msgHndlr.js', 'msgHndlr.js')
-            break*/
+            break
         case '!url2img':
             const _query = body.slice(9)
             if (!_query.match(isUrl)) return client.reply(from, mess.error.Iv, id)
@@ -709,9 +626,6 @@ module.exports = msgHandler = async (client, message) => {
             break
         case '!readme':
             client.reply(from, readme, id)
-            break
-        case '!info':
-            client.sendLinkWithAutoPreview(from, 'https://github.com/mhankbarbar/whatsapp-bot', info)
             break
         case '!snk':
             client.reply(from, snk, id)
