@@ -6,17 +6,15 @@ const {
     GroupSettingChange
 } = require('@adiwajshing/baileys')
 
-// Requerimento dos módulos
+// Requimento das dependências
 
-
-
-// Requerimentos dos JSON
-
-const welkom = JSON.parse(fs.readFileSync('./database/json/welkom.json'))
-const samih = JSON.parse(fs.readFileSync('./database/json/simi.json'))
-const setting = JSON.parse(fs.readFileSync('./database/json/settings.json'))
-const _leveling = JSON.parse(fs.readFileSync('./database/json/leveling.json'))
-const _level = JSON.parse(fs.readFileSync('./database/json/level.json'))
+const fs = require('fs')
+const moment = require('moment-timezone')
+const { exec } = require('child_process')
+const fetch = require('node-fetch')
+const tiktod = require('tiktok-scraper')
+const ffmpeg = require('fluent-ffmpeg')
+const { removeBackgroundFromImageFile } = require('remove.bg')
 
 // Requerimentos do Menu
 
@@ -33,15 +31,13 @@ const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRando
 const { fetchJson, fetchText } = require('./database/menu/fetcher')
 const { recognize } = require('./database/menu/ocr')
 
-// Requimento das dependências
+// Requerimentos dos JSON
 
-const fs = require('fs')
-const moment = require('moment-timezone')
-const { exec } = require('child_process')
-const fetch = require('node-fetch')
-const tiktod = require('tiktok-scraper')
-const ffmpeg = require('fluent-ffmpeg')
-const { removeBackgroundFromImageFile } = require('remove.bg')
+const welkom = JSON.parse(fs.readFileSync('./database/json/welkom.json'))
+const samih = JSON.parse(fs.readFileSync('./database/json/simi.json'))
+const setting = JSON.parse(fs.readFileSync('./database/json/settings.json'))
+const _leveling = JSON.parse(fs.readFileSync('./database/json/leveling.json'))
+const _level = JSON.parse(fs.readFileSync('.database/json/level.json'))
 
 prefix = setting.prefix
 blocked = []
