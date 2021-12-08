@@ -5,40 +5,29 @@ const {
     Mimetype,
     GroupSettingChange
 } = require('@adiwajshing/baileys')
-
-// Requimento das dependências
-
+const { color, bgcolor } = require('./lib/color')
+const { help } = require('./src/help')
+const { menuadmin } = require('./src/menuadmin')
+const { shalom } = require('./src/shalom')
+const { mensagem } = require('./src/mensagem')
+const { sayday } = require('./src/sayday')
+const { sayafter } = require('./src/sayafter')
+const { saynight } = require('./src/saynight')
+const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
+const { fetchJson, fetchText } = require('./lib/fetcher')
+const { recognize } = require('./lib/ocr')
 const fs = require('fs')
 const moment = require('moment-timezone')
 const { exec } = require('child_process')
 const fetch = require('node-fetch')
-const tiktod = require('tiktok-scraper')
+//const tiktod = require('tiktok-scraper')
 const ffmpeg = require('fluent-ffmpeg')
 const { removeBackgroundFromImageFile } = require('remove.bg')
-
-// Requerimentos do Menu
-
-const { color, bgcolor } = require('./database/menu/color')
-const { help } = require('./database/menu/help')
-const { vhelp } = require('./database/menu/vhelp')
-const { menuadmin } = require('./database/menu/menuadmin')
-const { shalom } = require('./database/menu/shalom')
-const { mensagem } = require('./database/menu/mensagem')
-const { sayday } = require('./database/menu/sayday')
-const { sayafter } = require('./database/menu/sayafter')
-const { saynight } = require('./database/menu/saynight')
-const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./database/menu/functions')
-const { fetchJson, fetchText } = require('./database/menu/fetcher')
-const { recognize } = require('./database/menu/ocr')
-
-// Requerimentos dos JSON
-
-const welkom = JSON.parse(fs.readFileSync('./database/json/welkom.json'))
-const samih = JSON.parse(fs.readFileSync('./database/json/simi.json'))
-const setting = JSON.parse(fs.readFileSync('./database/json/settings.json'))
+const welkom = JSON.parse(fs.readFileSync('./src/welkom.json'))
+const samih = JSON.parse(fs.readFileSync('./src/simi.json'))
+const setting = JSON.parse(fs.readFileSync('./src/settings.json'))
 const _leveling = JSON.parse(fs.readFileSync('./database/json/leveling.json'))
-const _level = JSON.parse(fs.readFileSync('.database/json/level.json'))
-
+const _level = JSON.parse(fs.readFileSync('./database/json/level.json'))
 prefix = setting.prefix
 blocked = []
 
@@ -192,7 +181,7 @@ async function starts() {
 			const type = Object.keys(mek.message)[0]
 			const apiKey = setting.apiKey // contact me on whatsapp wa.me/6285892766102
 			const { text, extendedText, contact, location, liveLocation, image, video, sticker, document, audio, product } = MessageType
-			const time = moment.tz('America/Brasilia').format('DD/MM HH:mm:ss')
+			const time = moment.tz('Asia/Jakarta').format('DD/MM HH:mm:ss')
 			body = (type === 'conversation' && mek.message.conversation.startsWith(prefix)) ? mek.message.conversation : (type == 'imageMessage') && mek.message.imageMessage.caption.startsWith(prefix) ? mek.message.imageMessage.caption : (type == 'videoMessage') && mek.message.videoMessage.caption.startsWith(prefix) ? mek.message.videoMessage.caption : (type == 'extendedTextMessage') && mek.message.extendedTextMessage.text.startsWith(prefix) ? mek.message.extendedTextMessage.text : ''
 			budy = (type === 'conversation') ? mek.message.conversation : (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text : ''
 			const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
@@ -200,22 +189,22 @@ async function starts() {
 			const isCmd = body.startsWith(prefix)
 
 			mess = {
-				wait: 'Aguarde, estou processando ⌛',
+				wait: 'Carregando o Mixxtério ⌛',
 				success: 'Sucesso ✔️',
-				levelon: '*O sistema de level foi ativado* ✔️',
-				leveloff: '*O sistema de level foi desativado* ❌',
-				levelnoton: '*O sistema de level ainda não foi ativo* ❌',
-				levelnol: '*Level* 0 ',
+				levelon: '*Habilitar Level* ✔️',
+				leveloff: '*Desabilitar Level* ❌',
+				levelnoton: '*Level não ativo* ❌',
+				levelnol: '*Mas bem kkkkk level* 0 ',
 				error: {
 					stick: 'Ih, consegui fazer essa não. ❌\nMas tente de novo 😅',
-					Iv: ' O link que você me forneceu é inválido ❌'
+					Iv: ' O link que você me forneceu é inválido, vaso ❌'
 				},
 				only: {
 					group: 'Só vou usar esse comando, quando eu estiver em um grupo 🤡',
 					ownerG: 'Se empolga não, esse comando é só para o dono do grupo 😏',
 					ownerB: 'Se empolga não, esse comando é só para o dono do bot 😏',
 					admin: 'Se empolga não, esse comando só pode ser usado pelos administradores do grupo 😎🤙',
-					Badmin: 'Não sou administrador, posso fazer nada 🤷‍♀️'
+					Badmin: 'Xiii, sou administradora não, posso fazer nada 🤷‍♀️'
 				}
 			}
 
@@ -276,10 +265,10 @@ async function starts() {
 			if (authorname != undefined) { } else { authorname = groupName }	
 			
 			function addMetadata(packname, author) {	
-				if (!packname) packname = 'Aquelas figurinhas duvidosas'; if (!author) author = 'Neon';
+				if (!packname) packname = 'Aquelas figurinhas duvidosas'; if (!author) author = 'bcm_v4';
 				author = author.replace(/[^a-zA-Z0-9]/g, '');
 				let name = `${author}_${packname}`
-				if (fs.existsSync(`./database/menu/stickers/${name}.exif`)) return `./database/menu/stickers/${name}.exif`
+				if (fs.existsSync(`./src/stickers/${name}.exif`)) return `./src/stickers/${name}.exif`
 				const json = {	
 					"sticker-pack-name": packname,
 					"sticker-pack-publisher": author,
@@ -310,8 +299,8 @@ async function starts() {
 
 				const buffer = Buffer.concat([littleEndian, buf2, buf3, buf4])	
 
-				fs.writeFile(`./database/menu/stickers/${name}.exif`, buffer, (err) => {	
-					return `./database/menu/stickers/${name}.exif`	
+				fs.writeFile(`./src/stickers/${name}.exif`, buffer, (err) => {	
+					return `./src/stickers/${name}.exif`	
 				})	
 
 			}
@@ -321,9 +310,6 @@ async function starts() {
 				case 'help':
 				case 'menu':
 					client.sendMessage(from, help(prefix), text)
-					break
-				case 'vhelp':
-					client.sendMessage(from, vhelp(prefix), text)
 					break
 				case 'menuadm':
 				case 'admmenu':
@@ -343,16 +329,16 @@ async function starts() {
 					break
 				case 'shalom':
 				case 'shalon':
-					client.sendMessage(from, shalom(prefix, sender), text)
+					client.sendMessage(from, shalom(prefix, sender), text, {quoted: mek})
 					break
 				case 'timesetday':
-					client.sendMessage(from, sayday(prefix, sender), text)
+					client.sendMessage(from, sayday(prefix, sender), text, {quoted: mek})
 				break
 				case 'timesetafter':
-					client.sendMessage(from, sayafter(prefix, sender), text)
+					client.sendMessage(from, sayafter(prefix, sender), text, {quoted: mek})
 				break
 				case 'timesetnight':
-					client.sendMessage(from, saynight(prefix, sender), text)
+					client.sendMessage(from, saynight(prefix, sender), text, {quoted: mek})
 				break
 				case 'blocklist':
 					teks = 'Essa é a lista de números bloqueados:\n'
@@ -378,6 +364,61 @@ async function starts() {
 							})
 					} else {
 						reply('Basta tirar uma foto 😉')
+					}
+					break
+				case 'tp':
+					if (args.length < 1) {
+						return reply('Escolha um dos 162 temas 😁')
+					} else if (args[0].toLowerCase() === 'list') {
+						teks = await fetchText('https://mhankbarbar.moe/api/textpro/listtheme')
+						teks = teks.replace(/<br>/g, '\n')
+						return reply(teks)
+					} else if (args.length < 2) {
+						return reply('Preciso que coloque um texto também 😅')
+					}
+					reply(mess.wait)
+					anu = `https://mhankbarbar.moe/api/textpro?pack=${args[0]}&text=${body.slice(3+args[0].length+1)}&apiKey=${apiKey}`
+					voss = await fetch(anu)	
+					ftype = require('file-type')	
+					vuss = await ftype.fromStream(voss.body)
+					if (vuss !== undefined) {
+						client.sendMessage(from, await getBuffer(anu), image, { caption: mess.success, quoted: mek })
+					} else {
+						reply('Eita, deu um erro no tema aqui 🤖, escolhe outro aí kkk')
+					}
+					break
+				case 'ep':
+					if (args.length < 1) {
+						return reply('Preciso que você escolha um entre os 216 temas disponíveis 😁')
+					} else if (args[0].toLowerCase() === 'list') {
+						teks = await fetchText('https://mhankbarbar.moe/api/ephoto/listtheme')
+						teks = teks.replace(/<br>/g, '\n')
+						return reply(teks)
+					} else if (args.length < 2) {
+						return reply('Preciso também do texto 😅')
+					}
+					reply(mess.wait)
+					anu = `https://mhankbarbar.moe/api/ephoto?pack=${args[0]}&text=${body.slice(3+args[0].length+1)}&apiKey=${apiKey}`
+					voss = await fetch(anu)
+					ftype = require('file-type')
+					vuss = await ftype.fromStream(voss.body)
+					//console.log(vuss)
+					if (vuss !== undefined) {
+						client.sendMessage(from, await getBuffer(anu), image, { caption: mess.success, quoted: mek })
+					} else {
+						reply('Hum, que pena, ocorreu um erro, mas tente de novo 🤓')
+					}
+					break
+				case 'tahta':
+					if (args.length < 1) return reply('Preciso de um texto 😅')
+					anu = `https://mhankbarbar.moe/api/htahta?text=${args.join(' ')}&apiKey=${apiKey}`
+					voss = await fetch(anu)
+					ftype = require('file-type')
+					vuss = await ftype.fromStream(voss.body)
+					if (vuss !== undefined) {
+						client.sendMessage(from, await getBuffer(anu), image, { quoted: mek, caption: mess.sucess })
+					} else {
+						reply('Hum, que pena, ocorreu um erro, mas tente de novo 🤓')
 					}
 					break
 				case 'fig':
@@ -496,7 +537,7 @@ async function starts() {
 					break
 				case 'gtts':
 					if (args.length < 1) return client.sendMessage(from, 'Preciso do código do idioma 🤔', text, {quoted: mek})
-					const gtts = require('./database/menu/gtts')(args[0])
+					const gtts = require('./lib/gtts')(args[0])
 					if (args.length < 2) return client.sendMessage(from, 'Preciso de um texto para poder converter 😅', text, {quoted: mek})
 					dtt = body.slice(9)
 					ranm = getRandom('.mp3')
@@ -507,6 +548,16 @@ async function starts() {
 						fs.unlinkSync(ranm)
 					})
 					break
+				/*case 'meme':
+					meme = await fetchJson('https://api.imgflip.com/get_memes', { method: 'get' })
+					buffer = await getBuffer(`https://imgur.com/gallery/${meme.hash}.jpg`)
+					client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Tenho nada a ver com isso 😳😳 kkkkk'})
+					break
+				case 'memeindo':
+					memein = await kagApi.memeindo()
+					buffer = await getBuffer(`https://imgur.com/${memein.hash}.jpg`)
+					client.sendMessage(from, buffer, image, {quoted: mek, caption: '.......'})
+					break*/
 				case 'setprefix':
 					if (args.length < 1) return
 					if (!isGroup) return reply(mess.only.group)
@@ -515,8 +566,13 @@ async function starts() {
 					if (!isOwner) return reply(mess.only.ownerB)
 					prefix = args[0]
 					setting.prefix = prefix
-					fs.writeFileSync('./database/menu/settings.json', JSON.stringify(setting, null, '\t'))
+					fs.writeFileSync('./src/settings.json', JSON.stringify(setting, null, '\t'))
 					reply(`Prefixo alterado com sucesso para: ${prefix}`)
+					break
+				case 'hilih':
+					if (args.length < 1) return reply('Preciso de um texto 🤖')
+					anu = await fetchJson(`https://mhankbarbars.herokuapp.com/api/hilih?teks=${body.slice(7)}`, {method: 'get'})
+					reply(anu.result)
 					break
 				case 'yt2mp3':
 					if (args.length < 1) return reply('Preciso do link 🤖')
@@ -548,7 +604,7 @@ async function starts() {
 					buffer = await getBuffer(anu.result)
 					client.sendMessage(from, buffer, video, {quoted: mek})
 					break
-				case 'tiktokstalk':
+				/*case 'tiktokstalk':
 					try {
 						if (args.length < 1) return client.sendMessage(from, 'Usernamenya mana um?', text, {quoted: mek})
 						let { user, stats } = await tiktod.getUserProfileInfo(args[0])
@@ -560,6 +616,16 @@ async function starts() {
 						console.log(`Error :`, color(e,'red'))
 						reply('Kemungkinan username tidak valid')
 					}
+					break*/
+				case 'nulis':
+				case 'tulis':
+					if (args.length < 1) return reply('O que você quer escrever? 🤖')
+					teks = body.slice(7)
+					reply(mess.wait)
+					anu = await fetchJson(`https://mhankbarbar.moe/nulis?text=${teks}&apiKey=${apiKey}`, {method: 'get'})
+					if (anu.error) return reply(anu.error)
+					buff = await getBuffer(anu.result)
+					client.sendMessage(from, buff, image, {quoted: mek, caption: mess.success})
 					break
 				case 'url2img':
 					tipelist = ['desktop','tablet','mobile']
@@ -585,7 +651,7 @@ async function starts() {
 					exec(`wget ${anu.result} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
 						fs.unlinkSync(ranp)
 						if (err) return reply(mess.error.stick)
-						exec(`webpmux -set exif ${addMetadata('Neon', authorname)} ${rano} -o ${rano}`, async (error) => {
+						exec(`webpmux -set exif ${addMetadata('bcm_v4', authorname)} ${rano} -o ${rano}`, async (error) => {
 							if (error) return reply(mess.error.stick)
 							client.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
 							fs.unlinkSync(rano)
@@ -648,7 +714,7 @@ async function starts() {
 						reply('Sucesso na transmissão')
 					}
 					break
-					case 'gamemode 1':
+					case 'gamemode1':
 					case 'promover':
 					case 'upar':
                     case 'promote':
@@ -669,7 +735,7 @@ async function starts() {
 						client.groupMakeAdmin(from, mentioned)
 					}
 					break
-				case 'gamemode 0':
+				case 'gamemode0':
 				case 'rebaixar':
 				case 'demote':
 					if (!isGroup) return reply(mess.only.group)
@@ -767,9 +833,33 @@ async function starts() {
 						fs.unlinkSync(media)
 						if (err) return reply('Não conseguir converter esse sticker em imagem ❌\nMas tente de novo! 🕹')
 						buffer = fs.readFileSync(ran)
-						client.sendMessage(from, buffer, image, {quoted: mek, caption: 'Eis aqui a sua imagem'})
+						client.sendMessage(from, buffer, image, {quoted: mek, caption: '>//<'})
 						fs.unlinkSync(ran)
 					})
+					break
+				case 'simi':
+					if (args.length < 1) return reply('Preciso de um texto 🤗')
+					teks = body.slice(5)
+					anu = await simih(teks) //fetchJson(`https://mhankbarbars.herokuapp.com/api/samisami?text=${teks}`, {method: 'get'})
+					//if (anu.error) return reply('Simi ga tau kak')
+					reply(anu)
+					break
+				case 'simih':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (args.length < 1) return reply('Se quiser alterar o estado dele, mande esse mesmo código com um 0 para desativar ou um 1 para ativar 🧐')
+					if (Number(args[0]) === 1) {
+						if (isSimi) return reply('O modo Simi já está ativo 😅')
+						samih.push(from)
+						fs.writeFileSync('./src/simi.json', JSON.stringify(samih))
+						reply('O modo simi foi ativado com sucesso neste grupo ✔️')
+					} else if (Number(args[0]) === 0) {
+						samih.splice(from, 1)
+						fs.writeFileSync('./src/simi.json', JSON.stringify(samih))
+						reply('O modo simi foi desativado com sucesso neste grupo ✔️')
+					} else {
+						reply('1 para ativar, 0 para desativar')
+					}
 					break
 				case 'bemvindo':
 				case 'boasvindas':
@@ -780,11 +870,11 @@ async function starts() {
 					if (Number(args[0]) === 1) {
 						if (isWelkom) return reply('As boas vindas já estão ativas nesse grupo 😅')
 						welkom.push(from)
-						fs.writeFileSync('./database/json/welkom.json', JSON.stringify(welkom))
+						fs.writeFileSync('./src/welkom.json', JSON.stringify(welkom))
 						reply('O recurso de boas-vindas foi ativo com sucesso neste grupo ✔️')
 					} else if (Number(args[0]) === 0) {
 						welkom.splice(from, 1)
-						fs.writeFileSync('./database/json/welkom.json', JSON.stringify(welkom))
+						fs.writeFileSync('./src/welkom.json', JSON.stringify(welkom))
 						reply('O recurso de boas-vindas foi dasativado com sucesso neste grupo ✔️')
 					} else {
 						reply('1 para ativar, 0 para desativar')

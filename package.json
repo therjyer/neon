@@ -1,5 +1,5 @@
 {
-  "name": "Neon",
+  "name": "bcm_v4",
   "version": "0.0.2",
   "description": "No comment",
   "main": "index.js",
@@ -11,8 +11,9 @@
     "start": "node index.js"
   },
   "keywords": [
-    "Neon",
+    "bcm",
     "whatsapp",
+    "v4",
     "bot"
   ],
   "author": "therjyer",
@@ -26,6 +27,7 @@
     "fake-useragent": "^1.0.1",
     "file-type": "^16.2.0",
     "fluent-ffmpeg": "^2.1.2",
+    "lolis.life": "^4.0.0",
     "moment-timezone": "^0.5.32",
     "multistream": "^4.0.1",
     "node-fetch": "^2.6.1",
@@ -37,10 +39,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/therjyer/Neon.git"
+    "url": "git+https://github.com/therjyer/bcm_v4.git"
   },
   "bugs": {
-    "url": "https://github.com/therjyer/Neon/issues"
+    "url": "https://github.com/therjyer/bcm_v4/issues"
   },
-  "homepage": "https://github.com/therjyer/Neon#readme"
+  "homepage": "https://github.com/therjyer/bcm_v4#readme"
 }
