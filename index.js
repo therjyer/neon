@@ -13,7 +13,7 @@ const {
 const { removeBackgroundFromImageFile } = require('remove.bg')
 const { exec } = require('child_process')
 const moment = require('moment-timezone')
-const tiktod = require('tiktok-scraper')
+//const tiktod = require('tiktok-scraper')
 const ffmpeg = require('fluent-ffmpeg')
 const fetch = require('node-fetch')
 const fs = require('fs')
