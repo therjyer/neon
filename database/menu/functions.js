@@ -130,8 +130,8 @@ const close = (id, text) => {
 	spins.fail(id, {text: text})
 }
 
-const banner = cfonts.render(('BRAZILIAN|CHURCH|BOT'), {
-    font: 'chrome',
+const banner = cfonts.render(('NEON|BOT'), {
+    font: 'shade',
     color: 'candy',
     align: 'center',
     gradient: ["red","yellow"],

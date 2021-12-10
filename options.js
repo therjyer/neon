@@ -1,6 +1,6 @@
 module.exports = options = (headless, start) => {
     const options = {
-        sessionId: 'BarBar',
+        sessionId: 'neon',
         headless: headless,
         qrTimeout: 0,
         authTimeout: 0,

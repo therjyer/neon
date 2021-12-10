@@ -1,3 +1,5 @@
+// Conexão com o baileys
+
 const {
     WAConnection,
     MessageType,
@@ -5,29 +7,128 @@ const {
     Mimetype,
     GroupSettingChange
 } = require('@adiwajshing/baileys')
-const { color, bgcolor } = require('./lib/color')
-const { help } = require('./src/help')
-const { menuadmin } = require('./src/menuadmin')
-const { shalom } = require('./src/shalom')
-const { mensagem } = require('./src/mensagem')
-const { sayday } = require('./src/sayday')
-const { sayafter } = require('./src/sayafter')
-const { saynight } = require('./src/saynight')
-const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, banner, start, info, success, close } = require('./lib/functions')
-const { fetchJson, fetchText } = require('./lib/fetcher')
-const { recognize } = require('./lib/ocr')
-const fs = require('fs')
-const moment = require('moment-timezone')
-const { exec } = require('child_process')
-const fetch = require('node-fetch')
-//const tiktod = require('tiktok-scraper')
-const ffmpeg = require('fluent-ffmpeg')
+
+// Chamada dos requerimentos
+
 const { removeBackgroundFromImageFile } = require('remove.bg')
-const welkom = JSON.parse(fs.readFileSync('./src/welkom.json'))
-const samih = JSON.parse(fs.readFileSync('./src/simi.json'))
-const setting = JSON.parse(fs.readFileSync('./src/settings.json'))
+const { exec } = require('child_process')
+const moment = require('moment-timezone')
+const tiktod = require('tiktok-scraper')
+const ffmpeg = require('fluent-ffmpeg')
+const fetch = require('node-fetch')
+const fs = require('fs')
+
+// Menu do banco de dados
+
+const {
+	color,
+	bgcolor
+} = require('./database/menu/color')
+const {
+	menuadmin
+} = require('./database/menu/help/menuadmin')
+const {
+	shalom
+} = require('./database/menu/shalom')
+const {
+	mensagem
+} = require('./database/menu/mensagem')
+const {
+	sayday
+} = require('./database/menu/sayday')
+const {
+	sayafter
+} = require('./database/menu/sayafter')
+const {
+	saynight
+} = require('./database/menu/saynight')
+const {
+	wait,
+	simih,
+	getBuffer,
+	h2k,
+	generateMessageID,
+	getGroupAdmins,
+	getRandom,
+	banner,
+	start,
+	info,
+	success,
+	close
+} = require('./database/menu/functions')
+const {
+	fetchJson,
+	fetchText
+} = require('./database/menu/fetcher')
+const {
+	recognize
+} = require('./database/menu/ocr')
+
+// Menus do bot
+
+const {
+	admin
+} = require('./database/menu/help/admin')
+const {
+	anime
+} = require('./database/menu/help/anime')
+const {
+	downloader
+} = require('./database/menu/help/downloader')
+const {
+	education
+} = require('./database/menu/help/education')
+const {
+	fun
+} = require('./database/menu/help/fun')
+const {
+	getafk
+} = require('./database/menu/help/getafk')
+const {
+	getfig
+} = require('./database/menu/help/getfig')
+const {
+	imgmkr
+} = require('./database/menu/help/imgmkr')
+const {
+	lgmkr
+} = require('./database/menu/help/lgmkr')
+const {
+	memes
+} = require('./database/menu/help/memes')
+const {
+	menu
+} = require('./database/menu/help/menu')
+const {
+	music
+} = require('./database/menu/help/music')
+const {
+	other
+} = require('./database/menu/help/other')
+const {
+	pacific
+} = require('./database/menu/help/pacific')
+const {
+	prfl
+} = require('./database/menu/help/prfl')
+const {
+	quests
+} = require('./database/menu/help/quests')
+const {
+	search
+} = require('./database/menu/help/search')
+const {
+	therjyer
+} = require('./database/menu/help/therjyer')
+
+// JSON do banco de dados
+
+const welkom = JSON.parse(fs.readFileSync('./database/json/welkom.json'))
+const samih = JSON.parse(fs.readFileSync('./database/json/simi.json'))
+const setting = JSON.parse(fs.readFileSync('./database/json/settings.json'))
 const _leveling = JSON.parse(fs.readFileSync('./database/json/leveling.json'))
 const _level = JSON.parse(fs.readFileSync('./database/json/level.json'))
+
 prefix = setting.prefix
 blocked = []
 
@@ -116,10 +217,10 @@ async function starts() {
 	client.logger.level = 'warn'
 	console.log(banner.string)
 	client.on('qr', () => {
-		console.log(color('[','white'), color('!','red'), color(']','white'), color(' Scan the qr code above'))
+		console.log(color('[','white'), color('!','red'), color(']','white'), color('Escaneie o código QR abaixo'))
 	})
 
-	fs.existsSync('./BarBar.json') && client.loadAuthInfo('./BarBar.json')
+	fs.existsSync('./neon.json') && client.loadAuthInfo('./neon.json')
 	client.on('connecting', () => {
 		start('2', 'Conectando...')
 	})
@@ -127,7 +228,7 @@ async function starts() {
 		success('2', 'Conectado!')
 	})
 	await client.connect({timeoutMs: 30*1000})
-        fs.writeFileSync('./BarBar.json', JSON.stringify(client.base64EncodedAuthInfo(), null, '\t'))
+        fs.writeFileSync('./neon.json', JSON.stringify(client.base64EncodedAuthInfo(), null, '\t'))
 
 	client.on('group-participants-update', async (anu) => {
 		if (!welkom.includes(anu.jid)) return
@@ -189,22 +290,22 @@ async function starts() {
 			const isCmd = body.startsWith(prefix)
 
 			mess = {
-				wait: 'Carregando o Mixxtério ⌛',
+				wait: 'Neon está carregando ⌛',
 				success: 'Sucesso ✔️',
-				levelon: '*Habilitar Level* ✔️',
-				leveloff: '*Desabilitar Level* ❌',
-				levelnoton: '*Level não ativo* ❌',
-				levelnol: '*Mas bem kkkkk level* 0 ',
+				levelon: '*O sistema de level foi habilitado* ✔️',
+				leveloff: '*O sistema de level for desabilitado* ❌',
+				levelnoton: '*O sistema de level ainda não foi ativo* ❌',
+				levelnol: '*Level 0*',
 				error: {
-					stick: 'Ih, consegui fazer essa não. ❌\nMas tente de novo 😅',
-					Iv: ' O link que você me forneceu é inválido, vaso ❌'
+					stick: 'Ocorreu um erro. ❌\nTente novamente.',
+					Iv: 'O link fornecido é inválido ❌'
 				},
 				only: {
-					group: 'Só vou usar esse comando, quando eu estiver em um grupo 🤡',
-					ownerG: 'Se empolga não, esse comando é só para o dono do grupo 😏',
-					ownerB: 'Se empolga não, esse comando é só para o dono do bot 😏',
-					admin: 'Se empolga não, esse comando só pode ser usado pelos administradores do grupo 😎🤙',
-					Badmin: 'Xiii, sou administradora não, posso fazer nada 🤷‍♀️'
+					group: 'Acesso negado, comando de grupo ❌',
+					ownerG: 'Acesso negado, você não é o dono do grupo ❌',
+					ownerB: 'Acesso negado, você não é o dono do Neon ❌',
+					admin: 'Acesso negado, você não é um administrador ❌',
+					Badmin: 'Acesso negado, Neon não é um administrador ❌'
 				}
 			}
 
@@ -265,7 +366,7 @@ async function starts() {
 			if (authorname != undefined) { } else { authorname = groupName }	
 			
 			function addMetadata(packname, author) {	
-				if (!packname) packname = 'Aquelas figurinhas duvidosas'; if (!author) author = 'bcm_v4';
+				if (!packname) packname = 'Neon BOT'; if (!author) author = 'Therjyer';
 				author = author.replace(/[^a-zA-Z0-9]/g, '');
 				let name = `${author}_${packname}`
 				if (fs.existsSync(`./src/stickers/${name}.exif`)) return `./src/stickers/${name}.exif`
@@ -305,18 +406,60 @@ async function starts() {
 
 			}
 			switch(command) {
-				case 'ajuda':
-				case 'comandos':
-				case 'help':
-				case 'menu':
-					client.sendMessage(from, help(prefix), text)
-					break
-				case 'menuadm':
-				case 'admmenu':
-				case 'admhelp':
-				case 'helpadm':
-					client.sendMessage(from, menuadmin(prefix), text)
-					break
+				case 'adm': case 'admin':
+					client.sendMessage(from, admin(prefix), text, {quoted: mek})
+				break
+				case 'anime':
+					client.sendMessage(from, anime(prefix), text, {quoted: mek})
+				break
+				case 'dl': case 'downloader':
+					client.sendMessage(from, downloader(prefix), text, {quoted: mek})
+				break
+				case 'edu': case 'education':
+					client.sendMessage(from, education(prefix), text, {quoted: mek})
+				break
+				case 'fun':
+					client.sendMessage(from, fun(prefix), text, {quoted: mek})
+				break
+				case 'getafk':
+					client.sendMessage(from, getafk(prefix), text, {quoted: mek})
+				break
+				case 'getfig':
+					client.sendMessage(from, getfig(prefix), text, {quoted: mek})
+				break
+				case 'imgmkr':
+					client.sendMessage(from, imgmkr(prefix), text, {quoted: mek})
+				break
+				case 'lgmkr':
+					client.sendMessage(from, lgmkr(prefix), text, {quoted: mek})
+				break
+				case 'memes':
+					client.sendMessage(from, memes(prefix), text, {quoted: mek})
+				break
+				case 'ajuda': case 'comandos': case 'help': case 'menu':
+					client.sendMessage(from, menu(prefix), text, {quoted: mek})
+				break
+				case 'msc': case 'music':
+					client.sendMessage(from, music(prefix), text, {quoted: mek})
+				break
+				case 'other':
+					client.sendMessage(from, other(prefix), text, {quoted: mek})
+				break
+				case 'pacific':
+					client.sendMessage(from, pacific(prefix), text, {quoted: mek})
+				break
+				case 'prfl': case 'perfil': case 'profile':
+					client.sendMessage(from, prfl(prefix), text, {quoted: mek})
+				break
+				case 'quests':
+					client.sendMessage(from, (prefix), text, {quoted: mek})
+				break
+				case 'srch': case 'search': case 'google': case 'buscar': case 'buscador':
+					client.sendMessage(from, (prefix), text, {quoted: mek})
+				break
+				case 'therjyer':
+					client.sendMessage(from, (prefix), text, {quoted: mek})
+				break
 				case 'info':
 					me = client.user
 					uptime = process.uptime()
@@ -327,8 +470,7 @@ async function starts() {
 				case 'bot':
 					client.sendMessage(from, mensagem(prefix, sender), text, {quoted: mek})
 					break
-				case 'shalom':
-				case 'shalon':
+				case 'shalom': case 'shalon':
 					client.sendMessage(from, shalom(prefix, sender), text, {quoted: mek})
 					break
 				case 'timesetday':
@@ -651,7 +793,7 @@ async function starts() {
 					exec(`wget ${anu.result} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
 						fs.unlinkSync(ranp)
 						if (err) return reply(mess.error.stick)
-						exec(`webpmux -set exif ${addMetadata('bcm_v4', authorname)} ${rano} -o ${rano}`, async (error) => {
+						exec(`webpmux -set exif ${addMetadata('Neon', authorname)} ${rano} -o ${rano}`, async (error) => {
 							if (error) return reply(mess.error.stick)
 							client.sendMessage(from, fs.readFileSync(rano), sticker, {quoted: mek})
 							fs.unlinkSync(rano)

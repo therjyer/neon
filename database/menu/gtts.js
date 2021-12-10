@@ -141,7 +141,7 @@ function tokenize(text) {
   if (!text)
     throw new Error('No text to speak');
 
-  var punc = '¡!()[]¶;|°•—«»≤≥«»‹›\n ';
+  var punc = '¡!()[]¶;|°•—«»≤≥«»\n ';
   var punc_list = punc.split('').map(function(char) {
     return escapeStringRegexp(char);
   });
@@ -169,7 +169,7 @@ function tokenize(text) {
 
 function createServer(getArgs, port) {
   var http = require("http");
-  var url from "url');
+  var url = require('url');
 
   var server = http.createServer(function(req, res) {
     var queryData = url.parse(req.url, true).query;
