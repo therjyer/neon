@@ -32,7 +32,7 @@ const menu = (prefix) => {
 	❏ *${prefix}lgmkr*
 	└─ Criador de logos
 
-	❏ *${prefix}meme*
+	❏ *${prefix}memes*
 	└─ Buscador de memes
 
 	❏ *${prefix}music*

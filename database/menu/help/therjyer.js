@@ -1,4 +1,4 @@
-const therjyer = (prefix, pushname) => {
+const therjyer = (prefix) => {
     return `◪ *Comandos do Therjyer*
     │
     ├─ ❏ ${prefix}setprefix

@@ -1,6 +1,6 @@
 const education = (prefix, botName, ownerName) => {
 	return `
-  │◪ *COMANDOS DE EDUCATIVOS* ◪│
+  │◪ *COMANDOS EDUCATIVOS* ◪│
   │
   ├─ ❏ ${prefix}wiki
   ├─ ❏ ${prefix}wikien

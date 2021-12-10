@@ -1,4 +1,4 @@
-const wibu = (prefix, ownerBot, botName) => {
+const anime = (prefix, ownerBot, botName) => {
   return `
   │◪ *BUSCADOR DE ANIMES* ◪│
   │
@@ -10,4 +10,4 @@ const wibu = (prefix, ownerBot, botName) => {
   ├─ ❏ ${prefix}wait
   └─ ❏ ${prefix}nekonime`
 }
-exports.wibu = wibu
+exports.anime = anime

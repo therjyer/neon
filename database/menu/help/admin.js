@@ -1,4 +1,4 @@
-const admin = (prefix, pushname) => {
+const admin = (prefix) => {
  return `
  │◪ *COMANDOS ADMINISTRATIVOS* ◪│
 

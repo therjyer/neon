@@ -1,4 +1,4 @@
-const menu = (prefix) => {
+const pacific = (prefix) => {
 	return `
     │◪ *COMANDOS PACÍFICOS* ◪│
     │
@@ -15,4 +15,4 @@ const menu = (prefix) => {
     └─ ❏ ${prefix}genesis1
 `
 }
-exports.menu = menu
+exports.pacific = pacific

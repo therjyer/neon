@@ -1,4 +1,4 @@
-const quests = (prefix, ownerBot, botName) => {
+const quests = (prefix) => {
 return `
 │◪ *PERGUNTAS ALEATÓRIAS* _~(Zoeiras)~_ ◪│
 │
