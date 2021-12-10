@@ -25,23 +25,20 @@ const {
 	bgcolor
 } = require('./database/menu/color')
 const {
-	menuadmin
-} = require('./database/menu/help/menuadmin')
-const {
 	shalom
-} = require('./database/menu/shalom')
+} = require('./database/menu/mensagens/shalom')
 const {
-	mensagem
-} = require('./database/menu/mensagem')
+	msg
+} = require('./database/menu/mensagens/msg')
 const {
 	sayday
-} = require('./database/menu/sayday')
+} = require('./database/menu/mensagens/sayday')
 const {
 	sayafter
-} = require('./database/menu/sayafter')
+} = require('./database/menu/mensagens/sayafter')
 const {
 	saynight
-} = require('./database/menu/saynight')
+} = require('./database/menu/mensagens/saynight')
 const {
 	wait,
 	simih,
