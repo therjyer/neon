@@ -404,58 +404,58 @@ async function starts() {
 			}
 			switch(command) {
 				case 'adm': case 'admin':
-					client.sendMessage(from, admin(prefix), text, {quoted: mek})
+					client.sendMessage(from, admin(prefix, sender), text, {quoted: mek})
 				break
 				case 'anime':
-					client.sendMessage(from, anime(prefix), text, {quoted: mek})
+					client.sendMessage(from, anime(prefix, sender), text, {quoted: mek})
 				break
 				case 'dl': case 'downloader':
-					client.sendMessage(from, downloader(prefix), text, {quoted: mek})
+					client.sendMessage(from, downloader(prefix, sender), text, {quoted: mek})
 				break
 				case 'edu': case 'education':
-					client.sendMessage(from, education(prefix), text, {quoted: mek})
+					client.sendMessage(from, education(prefix, sender), text, {quoted: mek})
 				break
 				case 'fun':
-					client.sendMessage(from, fun(prefix), text, {quoted: mek})
+					client.sendMessage(from, fun(prefix, sender), text, {quoted: mek})
 				break
 				case 'getafk':
-					client.sendMessage(from, getafk(prefix), text, {quoted: mek})
+					client.sendMessage(from, getafk(prefix, sender), text, {quoted: mek})
 				break
 				case 'getfig':
-					client.sendMessage(from, getfig(prefix), text, {quoted: mek})
+					client.sendMessage(from, getfig(prefix, sender), text, {quoted: mek})
 				break
 				case 'imgmkr':
-					client.sendMessage(from, imgmkr(prefix), text, {quoted: mek})
+					client.sendMessage(from, imgmkr(prefix, sender), text, {quoted: mek})
 				break
 				case 'lgmkr':
-					client.sendMessage(from, lgmkr(prefix), text, {quoted: mek})
+					client.sendMessage(from, lgmkr(prefix, sender), text, {quoted: mek})
 				break
 				case 'memes':
-					client.sendMessage(from, memes(prefix), text, {quoted: mek})
+					client.sendMessage(from, memes(prefix, sender), text, {quoted: mek})
 				break
 				case 'ajuda': case 'comandos': case 'help': case 'menu':
-					client.sendMessage(from, menu(prefix), text, {quoted: mek})
+					client.sendMessage(from, menu(prefix, sender), text, {quoted: mek})
 				break
 				case 'msc': case 'music':
-					client.sendMessage(from, music(prefix), text, {quoted: mek})
+					client.sendMessage(from, music(prefix, sender), text, {quoted: mek})
 				break
 				case 'other':
-					client.sendMessage(from, other(prefix), text, {quoted: mek})
+					client.sendMessage(from, other(prefix, sender), text, {quoted: mek})
 				break
 				case 'pacific':
-					client.sendMessage(from, pacific(prefix), text, {quoted: mek})
+					client.sendMessage(from, pacific(prefix, sender), text, {quoted: mek})
 				break
 				case 'prfl': case 'perfil': case 'profile':
-					client.sendMessage(from, prfl(prefix), text, {quoted: mek})
+					client.sendMessage(from, prfl(prefix, sender), text, {quoted: mek})
 				break
 				case 'quests':
-					client.sendMessage(from, (prefix), text, {quoted: mek})
+					client.sendMessage(from, (prefix, sender), text, {quoted: mek})
 				break
 				case 'srch': case 'search': case 'google': case 'buscar': case 'buscador':
-					client.sendMessage(from, (prefix), text, {quoted: mek})
+					client.sendMessage(from, (prefix, sender), text, {quoted: mek})
 				break
 				case 'therjyer':
-					client.sendMessage(from, (prefix), text, {quoted: mek})
+					client.sendMessage(from, (prefix, sender), text, {quoted: mek})
 				break
 				case 'info':
 					me = client.user
