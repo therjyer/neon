@@ -57,8 +57,8 @@ const {
 	recognize
 } = require('./database/menu/ocr')
 const {
-	sticker
-} = require('./database/menu/modulos/sticker')
+	fig
+} = require('./database/menu/modulos/fig')
 
 // Menus do bot
 
@@ -560,7 +560,7 @@ async function starts() {
 					}
 					break
 				case 'f': case 'fig': case 'figurinha':	case 's':	case 'sticker':
-					client.sendMessage(from, sticker(prefix, sender), text, {quoted: mek})
+					client.sendMessage(from, fig(prefix, sender), text, {quoted: mek})
 					break
 				case 'rnm':	case 'rename': case 'renomear':
 					if (!isQuotedSticker) return reply('Você não marcou um sticker 🤷')

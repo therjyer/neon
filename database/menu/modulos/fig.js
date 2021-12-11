@@ -3,7 +3,7 @@ const { exec } = require('child_process')
 const ffmpeg = require('fluent-ffmpeg')
 const fs = require('fs')
 
-const sticker = async (prefix, sender, text) => {
+const fig = async (prefix, sender, text) => {
 	if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
 		const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
 		const media = await client.downloadAndSaveMediaMessage(encmedia)
@@ -114,4 +114,4 @@ const sticker = async (prefix, sender, text) => {
 	}
 }
 
-exports.sticker = sticker
+exports.fig = fig
