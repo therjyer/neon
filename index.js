@@ -64,9 +64,6 @@ const {
 // Menus do bot
 
 const {
-	admin
-} = require('./database/menu/help/admin')
-const {
 	anime
 } = require('./database/menu/help/anime')
 const {
@@ -94,7 +91,8 @@ const {
 	memes
 } = require('./database/menu/help/memes')
 const {
-	menu
+	menu,
+	admin
 } = require('./database/menu/help/menu')
 const {
 	music
@@ -449,20 +447,20 @@ async function starts() {
 					client.sendMessage(from, prfl(prefix, sender), text, {quoted: mek})
 				break
 				case 'quests':
-					client.sendMessage(from, (prefix, sender), text, {quoted: mek})
+					client.sendMessage(from, quests(prefix, sender), text, {quoted: mek})
 				break
 				case 'srch': case 'search': case 'google': case 'buscar': case 'buscador':
-					client.sendMessage(from, (prefix, sender), text, {quoted: mek})
+					client.sendMessage(from, search(prefix, sender), text, {quoted: mek})
 				break
 				case 'therjyer':
-					client.sendMessage(from, (prefix, sender), text, {quoted: mek})
+					client.sendMessage(from, therjyer(prefix, sender), text, {quoted: mek})
 				break
 				case 'info':
 					me = client.user
 					uptime = process.uptime()
 					teks = `*Nome do bot*: ${me.name}\n*Número do bot*: @${me.jid.split('@')[0]}\n*Prefixo de comando*: ${prefix}\n*Total de contatos bloqueados*: ${blocked.length}\n*O bot está ativo em* : ${kyun(uptime)}`
 					buffer = await getBuffer(me.imgUrl)
-					client.sendMessage(from, buffer, image, {caption: teks, contextInfo:{mentionedJid: [me.jid]}})
+					client.sendMessage(from, info(prefix, sender), buffer, image, {caption: teks, contextInfo:{mentionedJid: [me.jid]}})
 					break
 				case 'bot':
 					client.sendMessage(from, msg(prefix, sender), text, {quoted: mek})
