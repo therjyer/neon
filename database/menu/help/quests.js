@@ -6,8 +6,8 @@ return `
 ├─ ❏ ${prefix}iludido
 ├─ ❏ ${prefix}confiavel
 ├─ ❏ ${prefix}paixao
-├─ ❏ ${prefix}testecovid
-└─
+└─ ❏ ${prefix}testecovid
+
 `
 }
 exports.quests = quests
