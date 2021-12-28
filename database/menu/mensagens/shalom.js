@@ -1,8 +1,5 @@
 const shalom = (prefix, pushname) => {
-    let sim = `Que a paz do Senhor esteja convosco`
-    let sima = `Santidade`
-
-    return (console.log(sim) || console.log(sima))
+    return `Que a paz do Senhor esteja convosco`
 }
 
 exports.shalom = shalom
