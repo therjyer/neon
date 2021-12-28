@@ -483,188 +483,114 @@ async function starts() {
 					teks += `Total: ${blocked.length}`
 					client.sendMessage(from, teks.trim(), extendedText, {quoted: mek, contextInfo: {"mentionedJid": blocked}})
 					break
-				case 'ocr':
+				case 'f': case 'fig': case 'figurinha':	case 's':	case 'sticker':
 					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
 						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
 						const media = await client.downloadAndSaveMediaMessage(encmedia)
-						reply(mess.wait)
-						await recognize(media, {lang: 'eng+ind', oem: 1, psm: 3})
-							.then(teks => {
-								reply(teks.trim())
-								fs.unlinkSync(media)
+						ran = getRandom('.webp')
+						await ffmpeg(`./${media}`)
+							.input(media)
+							.on('start', function (cmd) {
+								console.log(`Started : ${cmd}`)
 							})
-							.catch(err => {
-								reply(err.message)
+							.on('error', function (err) {
+								console.log(`Error : ${err}`)
 								fs.unlinkSync(media)
+								reply(mess.error.stick)
 							})
-					} else {
-						reply('Basta tirar uma foto 😉')
-					}
-					break
-				case 'tp':
-					if (args.length < 1) {
-						return reply('Escolha um dos 162 temas 😁')
-					} else if (args[0].toLowerCase() === 'list') {
-						teks = await fetchText('https://mhankbarbar.moe/api/textpro/listtheme')
-						teks = teks.replace(/<br>/g, '\n')
-						return reply(teks)
-					} else if (args.length < 2) {
-						return reply('Preciso que coloque um texto também 😅')
-					}
-					reply(mess.wait)
-					anu = `https://mhankbarbar.moe/api/textpro?pack=${args[0]}&text=${body.slice(3+args[0].length+1)}&apiKey=${apiKey}`
-					voss = await fetch(anu)	
-					ftype = require('file-type')	
-					vuss = await ftype.fromStream(voss.body)
-					if (vuss !== undefined) {
-						client.sendMessage(from, await getBuffer(anu), image, { caption: mess.success, quoted: mek })
-					} else {
-						reply('Ocorreu um erro, selecione outro.')
-					}
-					break
-				case 'ep':
-					if (args.length < 1) {
-						return reply('Preciso que você escolha um entre os 216 temas disponíveis 😁')
-					} else if (args[0].toLowerCase() === 'list') {
-						teks = await fetchText('https://mhankbarbar.moe/api/ephoto/listtheme')
-						teks = teks.replace(/<br>/g, '\n')
-						return reply(teks)
-					} else if (args.length < 2) {
-						return reply('Preciso também do texto 😅')
-					}
-					reply(mess.wait)
-					anu = `https://mhankbarbar.moe/api/ephoto?pack=${args[0]}&text=${body.slice(3+args[0].length+1)}&apiKey=${apiKey}`
-					voss = await fetch(anu)
-					ftype = require('file-type')
-					vuss = await ftype.fromStream(voss.body)
-					//console.log(vuss)
-					if (vuss !== undefined) {
-						client.sendMessage(from, await getBuffer(anu), image, { caption: mess.success, quoted: mek })
-					} else {
-						reply('Hum, que pena, ocorreu um erro, mas tente de novo 🤓')
-					}
-					break
-				case 'tahta':
-					if (args.length < 1) return reply('Preciso de um texto 😅')
-					anu = `https://mhankbarbar.moe/api/htahta?text=${args.join(' ')}&apiKey=${apiKey}`
-					voss = await fetch(anu)
-					ftype = require('file-type')
-					vuss = await ftype.fromStream(voss.body)
-					if (vuss !== undefined) {
-						client.sendMessage(from, await getBuffer(anu), image, { quoted: mek, caption: mess.sucess })
-					} else {
-						reply('Hum, que pena, ocorreu um erro, mas tente de novo 🤓')
-					}
-					break
-				case 'f': case 'fig': case 'figurinha':	case 's':	case 'sticker':
-						if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
-							const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-							const media = await client.downloadAndSaveMediaMessage(encmedia)
-							ran = getRandom('.webp')
-							await ffmpeg(`./${media}`)
-								.input(media)
-								.on('start', function (cmd) {
-									console.log(`Started : ${cmd}`)
-								})
-								.on('error', function (err) {
-									console.log(`Error : ${err}`)
-									fs.unlinkSync(media)
-									reply(mess.error.stick)
-								})
-								.on('end', function () {
-									console.log('Finish')
-									exec(`webpmux -set exif ${addMetadata('Neon BOT', authorname)} ${ran} -o ${ran}`, async (error) => {
-										if (error) return reply(mess.error.stick)
-										client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
-										fs.unlinkSync(media)	
-										fs.unlinkSync(ran)	
-									})
-									/*client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
-									fs.unlinkSync(media)
-									fs.unlinkSync(ran)*/
-								})
-								.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
-								.toFormat('webp')
-								.save(ran)
-						} else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
-							const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-							const media = await client.downloadAndSaveMediaMessage(encmedia)
-							ran = getRandom('.webp')
-							reply(mess.wait)
-							await ffmpeg(`./${media}`)
-								.inputFormat(media.split('.')[1])
-								.on('start', function (cmd) {
-									console.log(`Started : ${cmd}`)
-								})
-								.on('error', function (err) {
-									console.log(`Error : ${err}`)
-									fs.unlinkSync(media)
-									tipe = media.endsWith('.mp4') ? 'video' : 'gif'
-									reply(`Poxa, não consegui converter o ${tipe} em sticker, mas tente de novo 🥺`)
-								})
-								.on('end', function () {
-									console.log('Finish')
-									exec(`webpmux -set exif ${addMetadata('BOT', authorname)} ${ran} -o ${ran}`, async (error) => {
-										if (error) return reply(mess.error.stick)
-										client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
-										fs.unlinkSync(media)
-										fs.unlinkSync(ran)
-									})
-									/*client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
-									fs.unlinkSync(media)
-									fs.unlinkSync(ran)*/
-								})
-								.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
-								.toFormat('webp')
-								.save(ran)
-						} else if ((isMedia || isQuotedImage) && args[0] == 'nobg') {
-							const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-							const media = await client.downloadAndSaveMediaMessage(encmedia)
-							ranw = getRandom('.webp')
-							ranp = getRandom('.png')
-							reply(mess.wait)
-							keyrmbg = 'Your-ApiKey'
-							await removeBackgroundFromImageFile({path: media, apiKey: keyrmbg, size: 'auto', type: 'auto', ranp}).then(res => {
-								fs.unlinkSync(media)
-								let buffer = Buffer.from(res.base64img, 'base64')
-								fs.writeFileSync(ranp, buffer, (err) => {
-									if (err) return reply('Ocorreu um erro, mas tente novamente, por obséquio 🤠')
-								})
-								exec(`ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${ranw}`, (err) => {
-									fs.unlinkSync(ranp)
-									if (err) return reply(mess.error.stick)
-									exec(`webpmux -set exif ${addMetadata('Neon BOT', authorname)} ${ranw} -o ${ranw}`, async (error) => {
-										if (error) return reply(mess.error.stick)
-										client.sendMessage(from, fs.readFileSync(ranw), sticker, {quoted: mek})
-										fs.unlinkSync(ranw)
-									})
-									//client.sendMessage(from, fs.readFileSync(ranw), sticker, {quoted: mek})
-								})
-							})
-						/*} else if ((isMedia || isQuotedImage) && colors.includes(args[0])) {
-							const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-							const media = await client.downloadAndSaveMediaMessage(encmedia)
-							ran = getRandom('.webp')
-							await ffmpeg(`./${media}`)
-								.on('start', function (cmd) {
-									console.log('Started :', cmd)
-								})
-								.on('error', function (err) {
-									fs.unlinkSync(media)
-									console.log('Error :', err)
-								})
-								.on('end', function () {
-									console.log('Finish')
-									fs.unlinkSync(media)
+							.on('end', function () {
+								console.log('Finish')
+								exec(`webpmux -set exif ${addMetadata('Neon BOT', authorname)} ${ran} -o ${ran}`, async (error) => {
+									if (error) return reply(mess.error.stick)
 									client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
+									fs.unlinkSync(media)	
+									fs.unlinkSync(ran)	
+								})
+								/*client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
+								fs.unlinkSync(media)
+								fs.unlinkSync(ran)*/
+							})
+							.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+							.toFormat('webp')
+							.save(ran)
+					} else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
+						const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+						const media = await client.downloadAndSaveMediaMessage(encmedia)
+						ran = getRandom('.webp')
+						reply(mess.wait)
+						await ffmpeg(`./${media}`)
+							.inputFormat(media.split('.')[1])
+							.on('start', function (cmd) {
+								console.log(`Started : ${cmd}`)
+							})
+							.on('error', function (err) {
+								console.log(`Error : ${err}`)
+								fs.unlinkSync(media)
+								tipe = media.endsWith('.mp4') ? 'video' : 'gif'
+								reply(`❌ Não foi possível converter ${tipe} em sticker`)
+							})
+							.on('end', function () {
+								console.log('Finish')
+								exec(`webpmux -set exif ${addMetadata('BOT', authorname)} ${ran} -o ${ran}`, async (error) => {
+									if (error) return reply(mess.error.stick)
+									client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
+									fs.unlinkSync(media)
 									fs.unlinkSync(ran)
 								})
-								.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=${args[0]}@0.0, split [a][b]; [a] palettegen=reserve_transparent=off; [b][p] paletteuse`])
-								.toFormat('webp')
-								.save(ran)*/
-						} else {
-							reply(`Envie ou mencione uma foto com a legenda ${prefix}sticker para fazer a figurinha 🤗\nPorém caso seja um vídeo, o tempo máximo suportado é de 10 segundos 😅`)
-						}
+								/*client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
+								fs.unlinkSync(media)
+								fs.unlinkSync(ran)*/
+							})
+							.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+							.toFormat('webp')
+							.save(ran)
+					} else if ((isMedia || isQuotedImage) && args[0] == 'nobg') {
+						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+						const media = await client.downloadAndSaveMediaMessage(encmedia)
+						ranw = getRandom('.webp')
+						ranp = getRandom('.png')
+						reply(mess.wait)
+						keyrmbg = 'Your-ApiKey'
+						await removeBackgroundFromImageFile({path: media, apiKey: keyrmbg, size: 'auto', type: 'auto', ranp}).then(res => {
+							fs.unlinkSync(media)
+							let buffer = Buffer.from(res.base64img, 'base64')
+							fs.writeFileSync(ranp, buffer, (err) => {
+								if (err) return reply('Ocorreu um erro, tente novamente mais tarde.')
+							})
+							exec(`ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${ranw}`, (err) => {
+								fs.unlinkSync(ranp)
+								if (err) return reply(mess.error.stick)
+								exec(`webpmux -set exif ${addMetadata('BOT', authorname)} ${ranw} -o ${ranw}`, async (error) => {
+									if (error) return reply(mess.error.stick)
+									client.sendMessage(from, fs.readFileSync(ranw), sticker, {quoted: mek})
+									fs.unlinkSync(ranw)
+								})
+								//client.sendMessage(from, fs.readFileSync(ranw), sticker, {quoted: mek})
+							})
+						})
+					/*} else if ((isMedia || isQuotedImage) && colors.includes(args[0])) {
+						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+						const media = await client.downloadAndSaveMediaMessage(encmedia)
+						ran = getRandom('.webp')
+						await ffmpeg(`./${media}`)
+							.on('start', function (cmd) {
+								console.log('Started :', cmd)
+							})
+							.on('error', function (err) {
+								fs.unlinkSync(media)
+								console.log('Error :', err)
+							})
+							.on('end', function () {
+								console.log('Finish')
+								fs.unlinkSync(media)
+								client.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
+								fs.unlinkSync(ran)
+							})
+							.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=${args[0]}@0.0, split [a][b]; [a] palettegen=reserve_transparent=off; [b][p] paletteuse`])
+							.toFormat('webp')
+							.save(ran)*/
+					} else {
+						reply(`Marque uma imagem com o comando *${prefix}fig*.\nCaso seja vídeo, apenas 10 segundos são suportados.\nObs.: Para se mover, o vídeo ou gif deve ter menos de 1mb`)
 					}
 					break
 				case 'setprefix':
@@ -678,38 +604,38 @@ async function starts() {
 					fs.writeFileSync('./src/settings.json', JSON.stringify(setting, null, '\t'))
 					reply(`Prefixo alterado com sucesso para: ${prefix}`)
 					break
-				case 'tagall':
-					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
-					members_id = []
-					teks = (args.length > 1) ? body.slice(8).trim() : ''
-					teks += '\n\n'
-					for (let mem of groupMembers) {
-						teks += `*#* @${mem.jid.split('@')[0]}\n`
-						members_id.push(mem.jid)
-					}
-					mentions(teks, members_id, true)
-					break
-                    case 'tagall2':
-					members_id = []
-					teks = (args.length > 1) ? body.slice(8).trim() : ''
-					teks += '\n\n'
-					for (let mem of groupMembers) {
-						teks += `╠➥ @${mem.jid.split('@')[0]}\n`
-						members_id.push(mem.jid)
-					}
-					reply(teks)
-					break
-                    case 'tagall3':
-					members_id = []
-					teks = (args.length > 1) ? body.slice(8).trim() : ''
-					teks += '\n\n'
-					for (let mem of groupMembers) {
-						teks += `╠➥ https://wa.me/${mem.jid.split('@')[0]}\n`
-						members_id.push(mem.jid)
-					}
-					client.sendMessage(from, teks, text, {detectLinks: false, quoted: mek})
-					break
+					case 'tagall':
+						if (!isGroup) return reply(mess.only.group)
+						if (!isGroupAdmins) return reply(mess.only.admin)
+						members_id = []
+						teks = (args.length > 1) ? body.slice(8).trim() : ''
+						teks += '\n\n'
+						for (let mem of groupMembers) {
+							teks += `*#* @${mem.jid.split('@')[0]}\n`
+							members_id.push(mem.jid)
+						}
+						mentions(teks, members_id, true)
+						break
+						case 'tagall2':
+						members_id = []
+						teks = (args.length > 1) ? body.slice(8).trim() : ''
+						teks += '\n\n'
+						for (let mem of groupMembers) {
+							teks += `╠➥ @${mem.jid.split('@')[0]}\n`
+							members_id.push(mem.jid)
+						}
+						reply(teks)
+						break
+						case 'tagall3':
+						members_id = []
+						teks = (args.length > 1) ? body.slice(8).trim() : ''
+						teks += '\n\n'
+						for (let mem of groupMembers) {
+							teks += `╠➥ https://wa.me/${mem.jid.split('@')[0]}\n`
+							members_id.push(mem.jid)
+						}
+						client.sendMessage(from, teks, text, {detectLinks: false, quoted: mek})
+						break
 				case 'clearall':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
