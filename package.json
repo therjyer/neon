@@ -1,10 +1,11 @@
 {
   "name": "Neon",
-  "version": "0.0.2",
-  "description": "No comment",
+  "version": "0.5.0",
+  "description": "Bot de grupos de zapzap",
   "main": "index.js",
   "directories": {
-    "lib": "lib"
+    "lib": "lib",
+    "src": "src"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,23 +20,23 @@
   "author": "therjyer",
   "license": "ISC",
   "dependencies": {
-    "@adiwajshing/baileys": "^3.5.3",
-    "async": "^3.2.0",
-    "axios": "^0.21.1",
-    "cfonts": "^2.9.0",
+    "@adiwajshing/baileys": "^4.0.1",
+    "async": "^3.2.3",
+    "axios": "^0.26.1",
+    "cfonts": "^2.10.1",
     "escape-string-regexp": "^5.0.0",
     "fake-useragent": "^1.0.1",
     "ffmpeg": "^0.0.4",
-    "file-type": "^16.2.0",
+    "file-type": "^17.1.1",
     "fluent-ffmpeg": "^2.1.2",
     "lolis.life": "^4.0.0",
-    "moment-timezone": "^0.5.32",
-    "multistream": "^4.0.1",
-    "node-fetch": "^2.6.1",
+    "moment-timezone": "^0.5.34",
+    "multistream": "^4.1.0",
+    "node-fetch": "^3.2.3",
     "remove.bg": "^1.3.0",
     "request": "^2.81.0",
-    "spinnies": "^0.3.2",
-    "tiktok-scraper": "^1.4.7"
+    "spinnies": "^0.5.1",
+    "tiktok-scraper": "^1.4.36"
   },
   "repository": {
     "type": "git",
